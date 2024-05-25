@@ -1,0 +1,10 @@
+{
+  "name": "MaelztromMaeldulos-Editor",
+  "references": [
+    "MaelztromMaeldulos"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
