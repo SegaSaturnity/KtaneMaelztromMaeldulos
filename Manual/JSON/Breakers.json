@@ -1,0 +1,21 @@
+{
+  "Compatibility": "Compatible",
+  "Contributors": {
+    "Developer": [ "ObjectsCountries" ],
+    "Manual": [ "Maelztrom" ],
+    "Manual graphics": [ "Dragoon" ]
+  },
+  "DefuserDifficulty": "Easy",
+  "Description": "Flip black breakers to be in a certain arrangement depending on the serial number before flipping colorful breakers. Tags: 7-switches, 7-levers, red, yellow, blue, green",
+  "ExpertDifficulty": "Medium",
+  "ModuleID": "breakers",
+  "Name": "Breakers",
+  "Origin": "Mods",
+  "Published": "2024-05-27",
+  "SortKey": "BREAKERS",
+  "SourceUrl": "https://github.com/SegaSaturnity/KtaneMaelztromMaeldulos/",
+  "Souvenir": { "Status": "NotACandidate" },
+  "SteamID": "3251848295",
+  "Symbol": "Bkrs",
+  "Type": "Regular"
+}
