@@ -17,6 +17,7 @@
 
         table {
             width: 100%;
+            margin: auto;
         }
 
         .main {
@@ -37,10 +38,15 @@
         
         tr {
             text-align: center;
+            line-height: 25px;
         }
         
         .colours {
-            line-height: 40px;
+            line-height: 30px;
+        }
+        
+        .colours td:first-child {
+            width: 30%;
         }
     </style>
 </head>
@@ -59,10 +65,11 @@
                     <li>You must press each button and release it at the proper time.</li>
                     <li>The buttons may be pressed in any order, and will illuminate the LED in the center while held.</li>
                     <li>While holding a button, use the first table to find which <strong>Related Word</strong> is currently also present on the module.</li>
-                    <li>Use the <strong>Related Word</strong> in the second table, releasing the button when the given number is anywhere in the countdown timer.</li>
+                    <li>Use the second table to determine when to release the button, based on the <b>Related Word</b> and the color of the LED.</li>
                 </ul>
                 <div>
                     <h3>Related Word</h3>
+                    Use the table below to find which <b>Related Word</b> present on another button. 
                     <table>
                         <tr>
                             <td rowspan=2>Held Word</td>
@@ -84,6 +91,7 @@
                 </div>
                 <div>
                     <h3>Releasing the Button</h3>
+                    Release the button when the given number is anywhere in the countdown timer. 
                     <table>
                         <tr class="colours">
                             <td rowspan=2>LED Color</td>

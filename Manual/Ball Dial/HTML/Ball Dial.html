@@ -51,18 +51,23 @@
                 <p class="flavour-text"> Just how many sides does this ball have?</p>
                 <ul>
                     <li>You must use the buttons to spin the ball until it displays a digit
-                        in the serial number, then press <img src="img/Ball Dial/Target.svg" width="17">. </li>
-                    <li>Use the table to determine the direction to spin the ball. </li>
-                    <li>While the ball is displaying an <strong>arrow</strong>,<br>
-                        treat the direction the arrow is pointed as oriented UP. </li>
-                    <li>While the ball is displaying a <strong>word</strong>,<br>
-                        use that word instead of the Previous Input Direction in the table below. </li>
-                    <li>While the ball is displaying a <strong>number</strong>,<br>
-                        press the next button that many times, ignoring anything displayed between.<br>
-                        A zero may be treated as a one for quantity of button presses. </li>
-                    <li>Begin by spinning the ball <strong>UP</strong>. </li>
+                        in the serial number, then press <img src="img/Ball Dial/Target.svg" width="17">.</li>
+                    <li>When a button is pressed, the ball will spin toward it, and a new set of display elements will appear.</li>
+                    <li>Use the table to determine the next direction to spin the ball,<br>
+                        based on the elements in the current display and the previous direction the ball was spun.</li>
+                    <li>When the ball displays a <b>number</b>,<br>
+                        press the next button that many times, ignoring <b>all</b> displays in between.<br>
+                        A zero may be treated as a one for these presses.</li>
+                    <li>When the ball displays an <b>arrow</b>,<br>
+                        treat the direction the arrow is pointed as oriented UP.<br>
+                        <span style="font-size: .75rem; margin-left:25px">(spinning the ball away from the direction the arrow is pointed always counts as</span><br>
+                        <span style="font-size: .75rem; margin-left:25px">spinning it down, and then Previous Input Direction will then  be 'DOWN')</span></li>
+                    <li>When the ball displays a <b>word</b>,<br>
+                        use that word instead of the Previous Input Direction in the table below.</li>
+                    <li>Begin by spinning the ball <b>UP.</b><br></li>
                 </ul><br>
                 <h3>Next Spin Direction</h3>
+                Spin the ball in the direction given by the table below.
                 <table>
                     <tr>
                         <td rowspan=2 id="cur">Current Display</td>

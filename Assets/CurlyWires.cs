@@ -120,7 +120,10 @@ public class CurlyWires : MonoBehaviour {
 		
 		int pos_to_cut = ord_table[blues * 3 + redpos][cut_count-1] & 0x0f;
 		if (pos + 1 != pos_to_cut && !struck) {
-			Debug.LogFormat("[Curly Wires #{0}] Cut the wrong position, expected cut at pos {1}, pos cut was {2}", moduleId, pos_to_cut, pos+1);
+			if (cut_count > 1 && pos + 1 != (ord_table[blues * 3 + redpos][2] & 0x0f)) {
+				return;
+			}
+			Debug.LogFormat("[Curly Wires #{0}] Cut the wrong position, expected cut at position {1}, position cut was {2}", moduleId, pos_to_cut, pos+1);
 			module.HandleStrike();
 			return;
 		} 
