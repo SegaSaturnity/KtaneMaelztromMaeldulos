@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1">
+	<title>Breakers — Keep Talking and Nobody Explodes Module</title>
+	<link rel="stylesheet" type="text/css" href="css/font.css">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/ktane-utils.js"></script>
+</head>
+<body>
+	<div class="section">
+		<div class="page page-bg-01">
+			<div class="page-header">
+				<span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+				<span class="page-header-section-title">Breakers</span>
+			</div>
+			<div class="page-content">
+			<img src="img/Component/Breakers.svg" class="diagram">
+				<h2>On the Subject of Breakers</h2>
+				<p class="flavour-text">Oh no, did I break something?</p>
+				<ul>
+					<li>You must flip all of the breakers to the right.</li>
+					<li>The black breakers may be flipped at any time.</li>
+					<li>Only flip a colorful breaker when the black breakers are in the proper positions. Order breakers top to bottom.</li>
+					<li>Use the first table below to determine the positions the black breakers must start in for flipping a colorful breaker; R for right, L for left.</li>
+					<li>From the starting position, flip the black breakers back and forth according the the criteria listed in the second table below before flipping the respective colorful breaker.</li>
+				</ul>
+				<h3>Starting Position</h3>
+				<table width="100%" style="text-align:center;margin-top:10px;margin-bottom:30px"><thead><tr>
+					<th width="20%" rowspan=2>Color of the Breaker</th><th colspan=5 style="border-bottom:hidden">Highest Digit in the Serial Number</th>
+					</tr>
+					<tr style="border-top:hidden"><td style="border-right:hidden">0-4</td><td style="border-left:hidden;border-right:hidden">5-6</td><td style="border-left:hidden;border-right:hidden">7</td><td style="border-left:hidden;border-right:hidden">8</td><td style="border-left:hidden">9</td></tr>
+					</thead>
+					<tbody>
+					<tr><td style="background-color:#f08080">Red</td><td>RLLL</td><td>LLLR</td><td>RLRR</td><td>RRRL</td><td>RLRL</td>
+					<tr><td style="background-color:#87cefa">Blue</td><td>LLLL</td><td>RRLL</td><td>LRLR</td><td>LRRL</td><td>LLRL</td>
+					<tr><td style="background-color:#90ee90">Green</td><td>LRRR</td><td>LLRR</td><td>RLLR</td><td>LRLL</td><td>RRLR</td>
+					<tr><td style="background-color:#fffacd">Yellow</td><td>RRLR</td><td>LRRL</td><td>LLRL</td><td>RLRR</td><td>LRLR</td>
+					</tbody>
+				</table>
+				<h3>Further Adjustments</h3>
+				<table width="50%" style="text-align:center;float:right;margin-top:10px;margin-left:20px;margin-bottom:10px">
+					<thead>
+						<tr><th width="10%" rowspan=2>Colorful Breaker</th><th colspan=4 style="border-bottom:hidden">Black Breaker</th></tr>
+						<tr style="border-top:hidden"><td style="border-right:hidden">1st</td><td style="border-left:hidden;border-right:hidden">2nd</td><td style="border-left:hidden;border-right:hidden">3rd</td><td style="border-left:hidden">4th</td></tr>
+					</thead>
+					<tbody>
+						<tr><td>1st</td><td>EG49</td><td>IN56</td><td>DT23</td><td>CL78</td></tr>
+						<tr><td>2nd</td><td>QU28</td><td>PZ37</td><td>HV45</td><td>BW69</td></tr>
+						<tr><td>3rd</td><td>JR67</td><td>MX29</td><td>KA58</td><td>SF34</td></tr>
+					</tbody>
+				</table>
+				<p>For each colorful breaker, from the starting position, flip each given black breaker
+					every time a charachter given by the table appears in the serial number.
+					Each black breaker may need to be flipped several times, but only final position matters.
+					</p>
+			</div>
+			<div class="page-footer relative-footer">Page 1 of 1</div>
+		</div>
+	</div>
+</body></html>
