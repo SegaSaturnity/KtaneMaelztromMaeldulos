@@ -11,7 +11,6 @@
     <script src="js/jquery.3.7.0.min.js"></script>
     <script src="js/ruleseed.js"></script>
     <style>
-        /* Remove this if you do not have any tables */
         .dark table, table {
             margin: 1em auto;
             border: none;
@@ -22,7 +21,7 @@
             border-right: hidden;
         }
         
-        .top {
+        .dark .top, .top {
             border-top: hidden;
         }
         
@@ -37,15 +36,20 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            
+            setRules(rnd);
         }
         function setRules(rnd){
             var words = ["THAT", "THEN", "THERE", "THEM", "THEY", "THIS", "THESE", "THOSE"];
             var table = document.getElementById("main").children[0];
             for(var i = 1; i < 7; i++){
                 rnd.shuffleFisherYates(words);
-                for(var j = 2; j < 10; j++){
-                    table.children[j].children[i].innerHTML = "<b>"+words[j - 2]+"</b>";
+                for(var j = 2; j < 10; j++){ //no idea why i have to do this but if it works, it works lol
+                    if(j === 4)
+                        table.children[5].children[i].innerHTML = "<b>"+words[j - 2]+"</b>";
+                    else if(j === 5)
+                        table.children[4].children[i].innerHTML = "<b>"+words[j - 2]+"</b>";
+                    else
+                        table.children[j].children[i].innerHTML = "<b>"+words[j - 2]+"</b>";
                 }
             }
         }
@@ -72,7 +76,7 @@
                 <h3>The Next Answer</h3>
                 Answer the displayed question with the given answer. 
                 <table id="main">
-                    <tr >
+                    <tr>
                         <td rowspan=2>Previous<br>Answer</td>
                         <td colspan=6>Displayed Question</td>
                         <tr class="top">
@@ -83,77 +87,77 @@
                             <td class="hide">HOW</td>
                             <td style="border-left: hidden">WHY</td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THAT</td>
-                        <td><strong>THESE</strong></td>
-                        <td><strong>THEY</strong></td>
-                        <td><strong>THERE</strong></td>
-                        <td><strong>THEM</strong></td>
-                        <td><strong>THEN</strong></td>
-                        <td><strong>THOSE</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THEN</td>
-                        <td><strong>THIS</strong></td>
-                        <td><strong>THESE</strong></td>
-                        <td><strong>THEM</strong></td>
-                        <td><strong>THAT</strong></td>
-                        <td><strong>THEY</strong></td>
-                        <td><strong>THERE</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THEM</td>
-                        <td><strong>THEY</strong></td>
-                        <td><strong>THEN</strong></td>
-                        <td><strong>THOSE</strong></td>
-                        <td><strong>THERE</strong></td>
-                        <td><strong>THAT</strong></td>
-                        <td><strong>THIS</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THERE</td>
-                        <td><strong>THEN</strong></td>
-                        <td><strong>THAT</strong></td>
-                        <td><strong>THIS</strong></td>
-                        <td><strong>THOSE</strong></td>
-                        <td><strong>THEM</strong></td>
-                        <td><strong>THESE</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THEY</td>
-                        <td><strong>THOSE</strong></td>
-                        <td><strong>THIS</strong></td>
-                        <td><strong>THAT</strong></td>
-                        <td><strong>THEN</strong></td>
-                        <td><strong>THESE</strong></td>
-                        <td><strong>THEM</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THIS</td>
-                        <td><strong>THEM</strong></td>
-                        <td><strong>THERE</strong></td>
-                        <td><strong>THEY</strong></td>
-                        <td><strong>THESE</strong></td>
-                        <td><strong>THOSE</strong></td>
-                        <td><strong>THEN</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THESE</td>
-                        <td><strong>THERE</strong></td>
-                        <td><strong>THOSE</strong></td>
-                        <td><strong>THEN</strong></td>
-                        <td><strong>THEY</strong></td>
-                        <td><strong>THIS</strong></td>
-                        <td><strong>THAT</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>THOSE</td>
-                        <td><strong>THAT</strong></td>
-                        <td><strong>THEM</strong></td>
-                        <td><strong>THESE</strong></td>
-                        <td><strong>THIS</strong></td>
-                        <td><strong>THERE</strong></td>
-                        <td><strong>THEY</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>

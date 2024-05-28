@@ -17,7 +17,7 @@ public class QnA : MonoBehaviour {
 	
 	private string[] questions = new string[] {"WHAT", "WHEN", "WHERE", "WHO", "HOW", "WHY"};
 	private string[] answers = new string[] {"THAT", "THEN", "THERE", "THEM", "THEY", "THIS", "THESE", "THOSE"};
-	private int[] table = new int[] {6, 4, 2, 3, 1, 7, 5, 6, 3, 0, 4, 2, 1, 0, 5, 7, 3, 6, 4, 1, 7, 2, 0, 5, 7, 5, 0, 1, 6, 3, 3, 2, 4, 6, 7, 1, 2, 7, 1, 4, 5, 0, 0, 3, 6, 5, 2, 4};
+    private int[] table = new int[48];
 	
 	private string[] c_questions;
 	private string[] c_answers;
@@ -27,17 +27,15 @@ public class QnA : MonoBehaviour {
 	public TextMesh display_text;
 
 	void Start () {
-	    var RND = rs.GetRNG();
-	    if(RND.Seed != 1){
-	        int[] numbers = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
-	        for(int i = 0; i < 6; i++){
-	            RND.ShuffleFisherYates(numbers);
-	            for(int j = 0; j < 8; j++){
-	                table[j * 6 + i] = numbers[j];
-	            }
-	        }
-	    }
 		moduleId = moduleCount++;
+	    var RND = rs.GetRNG();
+        int[] numbers = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
+        for(int i = 0; i < 6; i++){
+            RND.ShuffleFisherYates(numbers);
+            for(int j = 0; j < 8; j++){
+                table[j * 6 + i] = numbers[j];
+            }
+        }
 		Debug.LogFormat("[Q & A #{0}] Module started.", moduleId);
 		
 		c_answers = (string[])answers.Clone();
