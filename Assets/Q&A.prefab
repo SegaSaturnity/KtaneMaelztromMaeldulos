@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 114705433570343140}
   - component: {fileID: 114017292684945994}
   - component: {fileID: 114262371579765054}
+  - component: {fileID: 114593365495956942}
   m_Layer: 0
   m_Name: Q&A
   m_TagString: Untagged
@@ -3060,6 +3061,7 @@ MonoBehaviour:
   module: {fileID: 114938348735572166}
   bomb: {fileID: 114120585042948274}
   audio: {fileID: 114279314034018520}
+  rs: {fileID: 114593365495956942}
   b_answers:
   - {fileID: 114699897782235188}
   - {fileID: 114828752339768994}
@@ -3257,6 +3259,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
+--- !u!114 &114593365495956942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689662451416522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 2
 --- !u!114 &114597088431911748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3630,7 +3644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ModuleType: q&a
-  ModuleDisplayName: Q&A
+  ModuleDisplayName: Q & A
   RequiresTimerVisibility: 0
 --- !u!114 &114985486703236484
 MonoBehaviour:
