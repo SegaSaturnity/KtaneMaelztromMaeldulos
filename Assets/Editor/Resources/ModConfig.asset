@@ -29,7 +29,9 @@ MonoBehaviour:
 
     moduleID: ballDial
 
-    moduleID: q&a'
+    moduleID: q&a
+
+    moduleID: breakers'
   version: 1.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: cae27366f62862c4e980df2fc57cfec5, type: 3}
