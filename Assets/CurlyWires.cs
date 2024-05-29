@@ -27,6 +27,8 @@ public class CurlyWires : MonoBehaviour {
 	private char[] order = new char[]{'1', '2', '3'};
 	private string[] table_a = new string[9];
 	private string[] table_b = new string[9];
+	private int blues, redpos;
+	private string[] ord_table;
 	
 	private int[] table_t = new int[45];	 
 	
@@ -92,6 +94,10 @@ public class CurlyWires : MonoBehaviour {
 		
 		Debug.LogFormat("[Curly Wires #{0}] Module started.", moduleId);
 		Debug.LogFormat("[Curly Wires #{0}] Wire sequence: {1}", moduleId, s_wires);
+		blues = wire_seq.Count(c => c == 1);
+		redpos = System.Array.IndexOf(wire_seq, 0);
+		ord_table = table_b;
+		if(bombInfo.GetSerialNumberLetters().Any(x => x == 'A' || x == 'E' || x == 'I' || x == 'O' || x == 'U')) ord_table = table_a;
 	}
 	
 	void cutPos( int pos ){	
@@ -102,14 +108,7 @@ public class CurlyWires : MonoBehaviour {
 		
 		mesh_wires[pos].SetActive(false);
 		mesh_cut[pos].SetActive(true);
-		
-		string[] ord_table;
-		ord_table = table_b;
-		if(bombInfo.GetSerialNumberLetters().Any(x => x == 'A' || x == 'E' || x == 'I' || x == 'O' || x == 'U')) ord_table = table_a;
 
-		int blues = wire_seq.Count(c => c == 1);
-		int redpos = System.Array.IndexOf(wire_seq, 0);
-		
 		char firstl = bombInfo.GetSerialNumberLetters().First();
 		string[] topr = new string[] { "ABC", "DE", "FGH", "IJK", "LMN", "PQR", "STU", "VW", "XZ" };
 		int col = 0;
@@ -148,4 +147,46 @@ public class CurlyWires : MonoBehaviour {
 		
 	}
 	
+	string TwitchHelpMessage = "!{0} 3 6 to cut wire 3 when the timer has a 6 in any position. Only one wire can be cut at a time.";
+    string TwitchManualCode = "https://ktane.timwi.de/HTML/Curly%20Wires.html";
+	
+	IEnumerator ProcessTwitchCommand(string command){
+        yield return null;
+	    string[]commandParts = command.Split(' ');
+	    if(commandParts.Length < 2){
+	        yield return "sendtochaterror {0}, too few parameters.";
+	        yield break;
+	    }
+	    if(commandParts.Length > 2){
+	        yield return "sendtochaterror {0}, too many parameters.";
+	        yield break;
+	    }
+	    int[]numbers=new int[2];
+	    if(int.TryParse(commandParts[0], out numbers[0]) && int.TryParse(commandParts[1], out numbers[1])){
+	        yield return new WaitUntil(() => bombInfo.GetFormattedTime().Contains(numbers[1].ToString()));
+	        cutPos(numbers[0] - 1);
+	    }
+	}
+	
+	IEnumerator TwitchHandleForcedSolve(){
+        yield return null;
+        if(isSolved)
+            yield break;
+	    string[] topr = new string[] { "ABC", "DE", "FGH", "IJK", "LMN", "PQR", "STU", "VW", "XZ" };
+	    char firstl = bombInfo.GetSerialNumberLetters().First();
+	    int col = 0;
+	    foreach ( string str in topr ) {
+		    if (str.Contains(firstl.ToString())) {
+			    col = System.Array.IndexOf(topr, str);
+		    }
+	    }
+	    for(int i = 0; i < 3; i++){
+	        int j = ord_table[blues * 3 + redpos][i] - 49;
+	        if(cutWires[j])
+	            continue;
+	        int row = wire_seq[j];
+	        yield return new WaitUntil(() => bombInfo.GetFormattedTime().Contains(table_t[row * 9 + col].ToString()));
+	        cutPos(j);
+	    }
+	}
 }

@@ -184,6 +184,10 @@ public class Quadrecta : MonoBehaviour {
     {
         yield return null;
         string[]commandParts=command.Split(' ');
+	    if(commandParts.Length < 2){
+	        yield return "sendtochaterror {0}, too few parameters.";
+	        yield break;
+	    }
         if(commandParts.Length > 2){
             yield return "sendtochaterror {0}, Too many parameters.";
             yield break;
