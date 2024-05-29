@@ -521,6 +521,7 @@ GameObject:
   - component: {fileID: 114261257928070952}
   - component: {fileID: 114310813428552106}
   - component: {fileID: 114188102537772944}
+  - component: {fileID: 114337023527191572}
   m_Layer: 0
   m_Name: Quadrecta
   m_TagString: Untagged
@@ -2739,6 +2740,7 @@ MonoBehaviour:
   bombInfo: {fileID: 114672230656735802}
   audio: {fileID: 114104031269897534}
   colorblind: {fileID: 114188102537772944}
+  rs: {fileID: 114337023527191572}
   buttons:
   - {fileID: 114437966540708616}
   - {fileID: 114302773678103054}
@@ -2758,6 +2760,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1.1, y: 1.1, z: 1.1}
   OutlineAmount: 0
+--- !u!114 &114337023527191572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788536663078406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114344376129694468
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,6 +9,7 @@ public class Quadrecta : MonoBehaviour {
     public KMBombInfo bombInfo;
     public KMAudio audio;
 	public KMColorblindMode colorblind;
+	public KMRuleSeedable rs;
 	
 	public KMSelectable[] buttons;
 	public Light light;
@@ -17,6 +18,7 @@ public class Quadrecta : MonoBehaviour {
 	private static int moduleCount;
 	private bool colorblindModeEnabled;
     private int moduleId;
+    private string[] selected;
 	
 	//Red, Blue, Green
 	private static Color[] lightColours = new Color[]{
@@ -39,14 +41,30 @@ public class Quadrecta : MonoBehaviour {
 	
 	private string[] words = new string[]{ "Okay", "Wait", "What", "Now", "When", "Stop", "Where" }; 
 	
-	private int[] table = new int[] {4, 7, 1, 8, 3, 2, 5, 9, 5, 3, 6, 1, 4, 8, 3, 8, 2, 5, 7, 9, 6};
+	private int[] table = new int[21];
+	private string[,,] relatedWords = new string[7,3,2];
 	private int[] solves = new int[] {0,0,0,0};
 
 	
 	void Awake () {
+	    var RND = rs.GetRNG();
+	    for(int i = 0; i < 7; i++){
+	        List<string> wordsCopy = new List<string>(words);
+	        wordsCopy.RemoveAt(i);
+	        RND.ShuffleFisherYates(wordsCopy);
+	        relatedWords[i,0,0]=wordsCopy[0];
+	        relatedWords[i,0,1]=wordsCopy[1];
+	        relatedWords[i,1,0]=wordsCopy[2];
+	        relatedWords[i,1,1]=wordsCopy[3];
+	        relatedWords[i,2,0]=wordsCopy[4];
+	        relatedWords[i,2,1]=wordsCopy[5];
+	    }
+	    for(int i = 0; i < 21; i++){
+	        table[i] = RND.Next(0, 10);
+	    }
 		int rand = UnityEngine.Random.Range(0,6);
 		moduleId = moduleCount++;
-		string[] selected = combinations[rand];
+		selected = combinations[rand];
 		Debug.LogFormat("[Quadrecta #{0}] Module started. Buttons are: {1}", moduleId, string.Join(", ", selected));
 		
 		colorblindModeEnabled = colorblind.ColorblindModeActive;
@@ -89,261 +107,24 @@ public class Quadrecta : MonoBehaviour {
 		audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, transform);
 		
 		string hword = buttons[pos].transform.GetChild(2).GetComponent<TextMesh>().text;
-		string rword = null;
-		switch (hword.ToLower()) {
-		case "okay":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 0:
-				case 2:
-					rword = "What";
-				break;
-				case 1:
-				case 3:
-					rword = "Now";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 0:
-				case 1:
-					rword = "Wait";
-				break;
-				case 2:
-				case 3:
-					rword = "Stop";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 0:
-				case 3:
-					rword = "When";
-				break;
-				case 1:
-				case 2:
-					rword = "Where";
-				break;
-				}
-			}
-		break;
-		case "wait":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 0:
-				case 5:
-					rword = "When";
-				break;
-				case 1:
-				case 4:
-					rword = "Now";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 1:
-				case 5:
-					rword = "Where";
-				break;
-				case 0:
-				case 4:
-					rword = "What";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 4:
-				case 5:
-					rword = "Stop";
-				break;
-				case 0:
-				case 1:
-					rword = "Okay";
-				break;
-				}
-			}
-		break;
-		case "what":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 0:
-				case 6:
-					rword = "When";
-				break;
-				case 2:
-				case 4:
-					rword = "Stop";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 0:
-				case 2:
-					rword = "Okay";
-				break;
-				case 4:
-				case 6:
-					rword = "Now";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 2:
-				case 6:
-					rword = "Where";
-				break;
-				case 0:
-				case 4:
-					rword = "Wait";
-				break;
-				}
-			}
-		break;
-		case "now":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 3:
-				case 4:
-					rword = "Stop";
-				break;
-				case 1:
-				case 6:
-					rword = "Where";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 1:
-				case 4:
-					rword = "Wait";
-				break;
-				case 3:
-				case 6:
-					rword = "When";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 1:
-				case 3:
-					rword = "Okay";
-				break;
-				case 4:
-				case 6:
-					rword = "What";
-				break;
-				}
-			}
-		break;
-		case "when":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 5:
-				case 6:
-					rword = "Where";
-				break;
-				case 0:
-				case 3:
-					rword = "Okay";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 0:
-				case 6:
-					rword = "What";
-				break;
-				case 3:
-				case 5:
-					rword = "Stop";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 0:
-				case 5:
-					rword = "Wait";
-				break;
-				case 3:
-				case 6:
-					rword = "Now";
-				break;
-				}
-			}
-		break;
-		case "stop":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 2:
-				case 3:
-					rword = "Okay";
-				break;
-				case 4:
-				case 5:
-					rword = "Wait";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 3:
-				case 4:
-					rword = "Now";
-				break;
-				case 2:
-				case 5:
-					rword = "Where";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 2:
-				case 4:
-					rword = "What";
-				break;
-				case 3:
-				case 5:
-					rword = "When";
-				break;
-				}
-			}
-		break;
-		case "where":
-			if (ledColors[pos] == 0) {
-				switch (rand){
-				case 1:
-				case 5:
-					rword = "Wait";
-				break;
-				case 2:
-				case 6:
-					rword = "What";
-				break;
-				}					
-			} else if (ledColors[pos] == 1) {
-				switch (rand){
-				case 1:
-				case 2:
-					rword = "Okay";
-				break;
-				case 5:
-				case 6:
-					rword = "When";
-				break;
-				}
-			} else {
-			switch (rand){
-				case 1:
-				case 6:
-					rword = "Now";
-				break;
-				case 2:
-				case 5:
-					rword = "Stop";
-				break;
-				}
-			}
-		break;
-		}
+		string[]rwords = new string[2];
+		List<int> index = new List<int>();
+		List<int> time_checks = new List<int>();
+	    if(selected.Contains(relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[pos],0])){
+	        rwords[0] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[pos],0];
+	        index.Add(System.Array.IndexOf(words, rwords[0]));
+	        time_checks.Add(table[ledColors[pos] * 7 + index.Last()]);
+	    }
+	    if(selected.Contains(relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[pos],1])){
+	        rwords[1] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[pos],1];
+	        index.Add(System.Array.IndexOf(words, rwords[1]));
+	        time_checks.Add(table[ledColors[pos] * 7 + index.Last()]);
+	    }
+	    if(index.Count == 0){
+	        rwords[0] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[pos],0];
+	        index.Add(System.Array.IndexOf(words, rwords[0]));
+	        time_checks.Add(table[ledColors[pos] * 7 + index.Last()]);
+	    }
 		
 		light.enabled = false;
 		light.transform.parent.GetComponent<MeshRenderer>().material.color = new Color(0.45f,0.45f,0.45f);
@@ -351,10 +132,9 @@ public class Quadrecta : MonoBehaviour {
 		light.transform.parent.GetChild(1).GetComponent<TextMesh>().text = "";
 		
 		if (solves[pos] == 1) return;
-		
-		int index = System.Array.IndexOf(words, rword);
 		//i=y*W + x
-		int time_check = table[ledColors[pos] * 7 + index];
+		//System.Array.IndexOf(words, rwords[0])
+		//table[ledColors[pos] * 7 + index]
 		string colorn = null;
 		switch (ledColors[pos]) {
 		case 0:
@@ -367,8 +147,8 @@ public class Quadrecta : MonoBehaviour {
 			colorn = "Green";
 		break;
 		}
-		Debug.LogFormat("[Quadrecta #{0}] Button {1} pressed, held word: {2}, related word: {3}, LED color: {4}, expecting a {5} in any position", moduleId, pos, hword, rword, colorn, time_check);
-		if (bombInfo.GetFormattedTime().Contains(time_check.ToString())) {
+		Debug.LogFormat("[Quadrecta #{0}] Button {1} pressed, held word: {2}, related word(s): {3}, LED color: {4}, expecting any of {5} in any position", moduleId, pos, hword, string.Join(", ", rwords.ToArray()), colorn, string.Join(", ", time_checks.Select(x => x.ToString()).ToArray()));
+		if (bombInfo.GetFormattedTime().ToCharArray().Where(x => x != ':' && x != '.').Any(time_checks.Select(x => (char)(x + 48)).Contains)) {
 			Debug.LogFormat("[Quadrecta #{0}] Button {1} released at the correct time!", moduleId, pos);
 			solves[pos] = 1;
 			if (solves.Count(s => s == 0) == 0){
@@ -397,4 +177,71 @@ public class Quadrecta : MonoBehaviour {
         buttons[pos].transform.localPosition = new Vector3(buttons[pos].transform.localPosition.x, b, buttons[pos].transform.localPosition.z);
     }
 
+    string TwitchHelpMessage = "!{0} hold OKAY to hold the button labeled OKAY, !{0} release 4 to release when the timer has a 4 in any position.";
+    string TwitchManualCode = "https://ktane.timwi.de/HTML/Quadrecta.html";
+    private KMSelectable heldButton = null;
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        yield return null;
+        string[]commandParts=command.Split(' ');
+        if(commandParts.Length > 2){
+            yield return "sendtochaterror {0}, Too many parameters.";
+            yield break;
+        }
+        switch(commandParts[0]){
+            case "hold":
+                if(selected.Select(x => x.ToUpperInvariant()).Contains(commandParts[1].ToUpperInvariant())){
+                    heldButton = buttons[selected.Select(x => x.ToUpperInvariant()).IndexOf(x => x == commandParts[1].ToUpperInvariant())];
+                    yield return heldButton;
+                }else{
+                    yield return "sendtochaterror {0}, that button is not on the module.";
+                }
+                break;
+            case "release":
+                int number;
+                if(heldButton == null){
+                    yield return "sendtochaterror {0}, no button is being held right now.";
+                }
+                if(int.TryParse(commandParts[1], out number)){
+                    yield return new WaitUntil(() => bombInfo.GetFormattedTime().ToCharArray().Where(x => x != ':' && x != '.').Contains((char)(number+48)));
+                    yield return heldButton;
+                    heldButton = null;
+                }else{
+                    yield return "sendtochaterror {0}, that is not a number.";
+                }
+                break;
+            default:
+                yield return "sendtochaterror {0}, your command must begin with either hold or release.";
+                break;
+        }
+    }
+    IEnumerator TwitchHandleForcedSolve(){
+        yield return null;
+        if(isSolved)
+            yield break;
+        for (int i = 0; i < buttons.Length; i++){
+			pressPos(i);
+		    string[]rwords = new string[2];
+		    List<int> index = new List<int>();
+		    List<int> time_checks = new List<int>();
+		    string hword = buttons[i].transform.GetChild(2).GetComponent<TextMesh>().text;
+	        if(selected.Contains(relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[i],0])){
+	            rwords[0] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[i],0];
+	            index.Add(System.Array.IndexOf(words, rwords[0]));
+	            time_checks.Add(table[ledColors[i] * 7 + index.Last()]);
+	        }
+	        if(selected.Contains(relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[i],1])){
+	            rwords[1] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[i],1];
+	            index.Add(System.Array.IndexOf(words, rwords[1]));
+	            time_checks.Add(table[ledColors[i] * 7 + index.Last()]);
+	        }
+	        if(index.Count == 0){
+	            rwords[0] = relatedWords[words.Select(x => x.ToUpper()).IndexOf(x => x == hword),ledColors[i],0];
+	            index.Add(System.Array.IndexOf(words, rwords[0]));
+	            time_checks.Add(table[ledColors[i] * 7 + index.Last()]);
+	        }
+			yield return new WaitUntil(() => bombInfo.GetFormattedTime().ToCharArray().Where(x => x != ':' && x != '.').Any(time_checks.Select(x => (char)(x + 48)).Contains));
+			releasePos(i, 0);
+		}
+    }
 }

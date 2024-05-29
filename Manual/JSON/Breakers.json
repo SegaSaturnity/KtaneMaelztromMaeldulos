@@ -12,6 +12,7 @@
   "Name": "Breakers",
   "Origin": "Mods",
   "Published": "2024-05-27",
+  "RuleSeedSupport": "Supported",
   "SortKey": "BREAKERS",
   "SourceUrl": "https://github.com/SegaSaturnity/KtaneMaelztromMaeldulos/",
   "Souvenir": { "Status": "NotACandidate" },

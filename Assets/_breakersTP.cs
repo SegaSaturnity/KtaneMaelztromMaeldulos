@@ -49,6 +49,8 @@ public class _breakersTP:Twitch<_breakersScript>{
 
     public override IEnumerable<Instruction>ForceSolve(){
         yield return null;
+        if(Module.Status.IsSolved)
+            yield break;
         for(int c=0;c<3;c++){
             for(int b=0;b<4;b++){
                 if(!Module.currentColorfulPositions[c]&&Module.currentBlackPositions[b]!=Module.finalPositions[c,b]){
