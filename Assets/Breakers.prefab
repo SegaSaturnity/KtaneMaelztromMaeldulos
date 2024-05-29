@@ -624,6 +624,7 @@ GameObject:
   - component: {fileID: 114117675368898622}
   - component: {fileID: 114631455765081764}
   - component: {fileID: 114714838367551574}
+  - component: {fileID: 114567213463337590}
   m_Layer: 0
   m_Name: Breakers
   m_TagString: Untagged
@@ -4501,6 +4502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a2cbe6e54f7c488307f07af589774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rs: {fileID: 114567213463337590}
   colors:
   - {fileID: 2100000, guid: ed32d430da5a74aaaa9d3f0b357479a9, type: 2}
   - {fileID: 2100000, guid: 1ed018f1ecd9e4c2493fba33a7d7c943, type: 2}
@@ -4928,6 +4930,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/DiffuseTint
+--- !u!114 &114567213463337590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1525662207606286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114568728940382570
 MonoBehaviour:
   m_ObjectHideFlags: 1
