@@ -611,6 +611,7 @@ GameObject:
   - component: {fileID: 114307541912731612}
   - component: {fileID: 114457542753063786}
   - component: {fileID: 114713505202394192}
+  - component: {fileID: 114988862991938054}
   m_Layer: 0
   m_Name: CurlyWires
   m_TagString: Untagged
@@ -3316,7 +3317,7 @@ MonoBehaviour:
   - {fileID: 114474269895804172}
   - {fileID: 114234281066713834}
   IsPassThrough: 0
-  ChildRowLength: 0
+  ChildRowLength: 3
   Highlight: {fileID: 114374556897740858}
   SelectableColliders: []
   DefaultSelectableIndex: 0
@@ -3626,6 +3627,7 @@ MonoBehaviour:
   bombInfo: {fileID: 114941735232022508}
   audio: {fileID: 114052857021409640}
   colorblind: {fileID: 114457542753063786}
+  rs: {fileID: 114988862991938054}
   b_wires:
   - {fileID: 114034234148459788}
   - {fileID: 114292205997822644}
@@ -3757,3 +3759,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1.2, y: 1.2, z: 1}
   OutlineAmount: 0
+--- !u!114 &114988862991938054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1746105270284454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1

@@ -10,11 +10,13 @@ public class CurlyWires : MonoBehaviour {
     public KMBombInfo bombInfo;
     public KMAudio audio;
 	public KMColorblindMode colorblind;
+    public KMRuleSeedable rs;
 	
 	public KMSelectable[] b_wires;
 	public GameObject[] mesh_wires;
 	public GameObject[] mesh_cut;
 	public TextMesh[] t_wires;
+    private bool[]cutWires = new bool[]{false, false, false};
 	
 	private bool isSolved;
 	private bool colorblindModeEnabled;
@@ -22,11 +24,11 @@ public class CurlyWires : MonoBehaviour {
     private int moduleId;
 	
 	private int[] wire_seq = new int[] {0,0,0};
+	private char[] order = new char[]{'1', '2', '3'};
+	private string[] table_a = new string[9];
+	private string[] table_b = new string[9];
 	
-	private string[] table_a = new string[]{ "312", "213", "132", "321", "123", "231", "213", "321", "123" };
-	private string[] table_b = new string[]{ "132", "213", "231", "213", "123", "321", "312", "321", "132" };
-	
-	private int[] table_t = new int[]{ 1, 8, 5, 7, 0, 3, 6, 4, 2, 9, 5, 3, 6, 4, 1, 2, 7, 0, 4, 3, 8, 2, 9, 6, 0, 1, 5, 2, 9, 1, 8, 4, 7, 3, 5, 6, 3, 7, 4, 0, 6, 2, 5, 1, 8 };	 
+	private int[] table_t = new int[45];	 
 	
 	private int cut_count = 0;
 	
@@ -46,6 +48,20 @@ public class CurlyWires : MonoBehaviour {
 	}
 
 	void Start () {
+        var RND = rs.GetRNG();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                RND.ShuffleFisherYates(order);
+                table_a[i * 3 + j] = ""+order[0]+order[1]+order[2];
+                RND.ShuffleFisherYates(order);
+                table_b[i * 3 + j] = ""+order[0]+order[1]+order[2];
+            }
+        }
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 9; j++){
+                table_t[i * 9 + j] = RND.Next(0, 10);
+            }
+        }
 		wire_seq[1] = UnityEngine.Random.Range(2,5);
 		wire_seq[2] = UnityEngine.Random.Range(2,5);
 		if (UnityEngine.Random.value < 0.67f) wire_seq[1] = 1;
@@ -79,6 +95,8 @@ public class CurlyWires : MonoBehaviour {
 	}
 	
 	void cutPos( int pos ){	
+        if(cutWires[pos])
+            return;
 		audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.WireSnip, transform);
 		b_wires[pos].AddInteractionPunch();
 		
@@ -109,7 +127,7 @@ public class CurlyWires : MonoBehaviour {
 			module.HandleStrike();
 			struck = true;
 		}
-
+        cutWires[pos] = true;
 		cut_count++;
 		if (cut_count == 3) {
 			audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
