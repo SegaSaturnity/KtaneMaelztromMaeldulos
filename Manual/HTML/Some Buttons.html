@@ -8,8 +8,12 @@
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="js/ktane-utils.js"></script>
+    <script src="js/jquery.3.7.0.min.js"></script>
+    <script src="js/ruleseed.js"></script>
     <style>
-        /* Remove this if you do not have any tables */
+        .dark svg circle { stroke: #DDD; }
+        svg circle.filledIn { fill: #000; }
+        .dark svg circle.filledIn { fill: #DDD; }
         .dark table, table {
             margin: 1em auto;
             border: none;
@@ -18,10 +22,88 @@
         .main {
             float: left;
             width: 33%;
-            margin-bottom: 20px;
+            margin-bottom: 20px; 
             text-align: center;
         }
     </style>
+    <script>
+        function setDefaultRules(rnd){
+            setRules(rnd);
+        }
+        function setRules(rnd){
+            var colors = ["red", "blue", "green", "white", "black"];
+            var ports = ["a DVI", "a parallel", "a PS/2", "an RJ-45", "a serial", "an RCA"];
+            var batteries = ["AA", "D"];
+            var ruleTemplates = [
+                                    "The serial number contains a vowel",
+                                    "The serial number does not contain a vowel",
+                                    "The serial number has a digit over #",
+                                    "The serial number has a digit under #",
+                                    "The bomb has PORTS port",
+                                    "The bomb has at least _ BATTERY batteries",
+                                    "The bomb has at most _ BATTERY batteries",
+                                    "There are at least ! COLOR buttons",
+                                    "There are at most ! COLOR buttons",
+                                    "The quantity of COLOR and COLOR2 buttons is the same",
+                                    "The quantity of COLOR and COLOR2 buttons is different",
+                                    "The quantity of COLOR buttons is odd",
+                                    "The quantity of COLOR buttons is even",
+                                    "There are no buttons of a unique color",
+                                    "There are 5 different colors of buttons"
+                                ];
+            rnd.shuffleFisherYates(ruleTemplates);
+            for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
+                for(var j = 0; j < 12; j++){
+                    document.getElementById(`diagram${i}`).children[j].className = "highlightable";
+                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent";
+                }
+            }
+            for(var i = 0; i < 12; i++){
+                if(ruleTemplates[i].includes("#"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("#", rnd.next(1, 9));
+                if(ruleTemplates[i].includes("_")){
+                        var number = rnd.next(1, 5);
+                        ruleTemplates[i] = ruleTemplates[i].replace("_", number);
+                        if(number === 1){
+                            ruleTemplates[i] = ruleTemplates[i].replace("batteries", "battery");
+                        }
+                    }
+                if(ruleTemplates[i].includes("!")){
+                        var number = rnd.next(1, 12);
+                        ruleTemplates[i] = ruleTemplates[i].replace("!", number);
+                        if(number === 1){
+                            ruleTemplates[i] = ruleTemplates[i].replace("There are", "There is");
+                            ruleTemplates[i] = ruleTemplates[i].replace("buttons", "button");
+                        }
+                    }
+                if(ruleTemplates[i].includes("PORTS"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("PORTS", ports[rnd.next(0, 6)]);
+                if(ruleTemplates[i].includes("BATTERY"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("BATTERY", batteries[rnd.next(0, 2)]);
+                if(ruleTemplates[i].includes("COLOR")){
+                    var color1 = rnd.next(0, 5);
+                    ruleTemplates[i] = ruleTemplates[i].replace("COLOR", colors[color1]);
+                    if(ruleTemplates[i].includes("COLOR2")){
+                        var color2;
+                        do{
+                            color2 = rnd.next(0, 5);
+                        }while(color2 === color1);
+                        ruleTemplates[i] = ruleTemplates[i].replace("COLOR2", colors[color2]);
+                    }
+                }
+                document.getElementById(`rule${i}`).innerText = ruleTemplates[i];
+                var twoCircles = rnd.next(0,3);
+                var filledInCircle = rnd.next(0, 12);
+                document.getElementById(`diagram${i}`).children[filledInCircle].className += "highlightable filledIn";
+                document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
+                if(twoCircles === 2){
+                    filledInCircle = rnd.next(0, 12);
+                    document.getElementById(`diagram${i}`).children[filledInCircle].className += "highlightable filledIn";
+                    document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="section">
@@ -32,44 +114,212 @@
             </div>
             <div class="page-content">
                 <img src="img/Component/Some Buttons.svg" class="diagram">
-                <h2>On the Subject of the Some Buttons</h2>
+                <h2>On the Subject of Some Buttons</h2>
                 <p class="flavour-text">Button, button, who's got the button?</p>
                 <ul>
-                    <li>You must push each of the correct buttons.
-                    <li>Use the key below, pressing the buttons colored black.<br>Press all that apply.
-                    <li>Each button only needs to be pressed once.
+                    <li>You must push each of the correct buttons.</li>
+                    <li>Use the key below, pressing the buttons colored black, press all that apply.</li>
+                    <li>Each button only needs to be pressed once.</li>
                 </ul><br>
                 <div>
-                    <div class="main">The serial number contains a vowel<br>
-                    <img src="img/Some Buttons/SomeButtons1.svg" height="100" width="100"></div>
-                    <div class="main">The serial number<br>has a digit over 6<br>
-                    <img src="img/Some Buttons/SomeButtons2.svg" height="100" width="100"></div>
-                    <div class="main">The bomb has a<br>parallel port<br>
-                    <img src="img/Some Buttons/SomeButtons3.svg" height="100" width="100"></div>
+                    <div class="main"><span id="rule0"></span><br>
+                        <svg id="diagram0" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule1"></span><br>
+                        <svg id="diagram1" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule2"></span><br>
+                        <svg id="diagram2" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
                 </div>
                 <div>
-                    <div class="main">The bomb has a<br>AA battery<br>
-                    <img src="img/Some Buttons/SomeButtons4.svg" height="100" width="100"></div>
-                    <div class="main">The bomb has a<br>D battery<br>
-                    <img src="img/Some Buttons/SomeButtons5.svg" height="100" width="100"></div>
-                    <div class="main">The bomb has a<br>PS/2 port<br>
-                    <img src="img/Some Buttons/SomeButtons6.svg" height="100" width="100"></div>
+                    <div class="main"><span id="rule3"></span><br>
+                        <svg id="diagram3" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule4"></span><br>
+                        <svg id="diagram4" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule5"></span><br>
+                        <svg id="diagram5" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
                 </div>
                 <div>
-                    <div class="main">There are 4+<br>red buttons<br>
-                    <img src="img/Some Buttons/SomeButtons7.svg" height="100" width="100"></div>
-                    <div class="main">The quantity of blue and green buttons is the same<br>
-                    <img src="img/Some Buttons/SomeButtons8.svg" height="100" width="100"></div>
-                    <div class="main">The quantity of<br>black buttons is odd<br>
-                    <img src="img/Some Buttons/SomeButtons9.svg" height="100" width="100"></div>
+                    <div class="main"><span id="rule6"></span><br>
+                        <svg id="diagram6" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule7"></span><br>
+                        <svg id="diagram7" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule8"></span><br>
+                        <svg id="diagram8" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
                 </div>
                 <div>
-                    <div class="main">There are no buttons<br>of a unique color<br>
-                    <img src="img/Some Buttons/SomeButtons10.svg" height="100" width="100"></div>
-                    <div class="main">There are 5 different colors of buttons<br>
-                    <img src="img/Some Buttons/SomeButtons11.svg" height="100" width="100"></div>
-                    <div class="main">There are no<br>white buttons<br>
-                    <img src="img/Some Buttons/SomeButtons12.svg" height="100" width="100"></div>
+                    <div class="main"><span id="rule9"></span><br>
+                        <svg id="diagram9" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule10"></span><br>
+                        <svg id="diagram10" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="main"><span id="rule11"></span><br>
+                        <svg id="diagram11" xmlns="http://www.w3.org/2000/svg" fill="none" width="100" viewBox="0 0 278 248" style="margin-bottom:0">
+                            <circle class="highlightable" cx="69" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="34" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="34" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="244" cy="94" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="69" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="139" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="209" cy="154" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="104" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                            <circle class="highlightable" cx="174" cy="214" r="25" fill="transparent" stroke="#000" stroke-width="3"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
             <div class="page-footer relative-footer">Page 1 of 1</div>
