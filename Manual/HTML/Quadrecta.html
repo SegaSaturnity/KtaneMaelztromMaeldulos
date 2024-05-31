@@ -54,15 +54,23 @@
             setRules(rnd);
         }
         function setRules(rnd){
-            var words = ["Okay", "Wait", "What", "Now", "When", "Stop", "Where"];
+            var words = ["Okay", "Wait", "What", "Now", "When", "Stop", "Where", "Again", "Blank", "Repeat"];
+            var indices = [
+                [2,3,5,1,4,6],
+                [3,4,6,2,5,0],
+                [4,5,0,3,6,1],
+                [5,6,1,4,0,2],
+                [6,0,2,5,1,3],
+                [0,1,3,6,2,4],
+                [1,2,4,0,3,5]
+            ];
+            rnd.shuffleFisherYates(words);
             var firstTable = document.getElementById("firstTable").children[0];
             for(var i = 0; i < 7; i++){
-                var wordsCopy = [...words];
-                wordsCopy.splice(i, 1); //if i do this on one line, wordsCopy ends up being the spliced item (i want it to be everything but the spliced item)
-                rnd.shuffleFisherYates(wordsCopy);
-                firstTable.children[i + 2].children[1].innerText = wordsCopy[0] + " or " + wordsCopy[1];
-                firstTable.children[i + 2].children[2].innerText = wordsCopy[2] + " or " + wordsCopy[3];
-                firstTable.children[i + 2].children[3].innerText = wordsCopy[4] + " or " + wordsCopy[5];
+                firstTable.children[i+2].children[0].innerText = words[i];
+                firstTable.children[i+2].children[1].innerText = words[indices[i][0]]+" or "+words[indices[i][1]];
+                firstTable.children[i+2].children[2].innerText = words[indices[i][2]]+" or "+words[indices[i][3]];
+                firstTable.children[i+2].children[3].innerText = words[indices[i][4]]+" or "+words[indices[i][5]];
             }
             var secondTable = document.getElementById("secondTable").children[0];
             for(var i = 2; i < 5; i++){
@@ -92,7 +100,7 @@
                 </ul>
                 <div>
                     <h3>Related Word</h3>
-                    <span style="font-size:14px;line-height:5px">Use the table below to find which <b>Related Word</b> is present on another button. If both words are present, either one can be used; if neither word is present, default to the first word.</span>
+                    <p>Use the table below to find which <b>Related Word</b> is present on another button.</p>
                     <table id="firstTable">
                         <tr>
                             <td rowspan=2>Held Word</td>
@@ -103,13 +111,13 @@
                             <td class="main hide">BLUE</td>
                             <td class="main">GREEN</td>
                         </tr>
-                        <tr><td>Okay</td><td></td><td></td><td></td></tr>
-                        <tr><td>Wait</td><td></td><td></td><td></td></tr>
-                        <tr><td>What</td><td></td><td></td><td></td></tr>
-                        <tr><td>Now</td><td></td><td></td><td></td></tr>
-                        <tr><td>When</td><td></td><td></td><td></td></tr>
-                        <tr><td>Stop</td><td></td><td></td><td></td></tr>
-                        <tr><td>Where</td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td></tr>
                     </table>
                 </div>
                 <div>
