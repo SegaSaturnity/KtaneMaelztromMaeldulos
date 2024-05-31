@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 114998139273603294}
   - component: {fileID: 114340672920704562}
   - component: {fileID: 114315085055938434}
+  - component: {fileID: 114013764551422960}
   m_Layer: 0
   m_Name: SomeButtons
   m_TagString: Untagged
@@ -1355,7 +1356,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1156644530963056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0206574, y: -7.604804, z: 5.44022}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4502859380745856}
@@ -4723,6 +4724,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Transparent/Mobile Diffuse Underlay200
+--- !u!114 &114013764551422960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1156644530963056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114017365101223868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5192,6 +5205,7 @@ MonoBehaviour:
   bombInfo: {fileID: 114726919211469402}
   audio: {fileID: 114741320285516694}
   colorblind: {fileID: 114315085055938434}
+  rs: {fileID: 114013764551422960}
   buttons:
   - {fileID: 114306194913329842}
   - {fileID: 114984950819115246}
@@ -5909,6 +5923,7 @@ MonoBehaviour:
   - {fileID: 114306194913329842}
   - {fileID: 114984950819115246}
   - {fileID: 114136462129660086}
+  - {fileID: 0}
   - {fileID: 114990869127575396}
   - {fileID: 114151510735814286}
   - {fileID: 114780807422607794}
@@ -5916,8 +5931,11 @@ MonoBehaviour:
   - {fileID: 114571986566682496}
   - {fileID: 114659266719556580}
   - {fileID: 114110932906407440}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 114080373672977686}
   - {fileID: 114772966819003402}
+  - {fileID: 0}
   IsPassThrough: 0
   ChildRowLength: 0
   Highlight: {fileID: 114463523536768848}

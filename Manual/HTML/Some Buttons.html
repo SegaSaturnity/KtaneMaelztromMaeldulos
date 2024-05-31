@@ -33,7 +33,7 @@
         function setRules(rnd){
             var colors = ["red", "blue", "green", "white", "black"];
             var ports = ["a DVI", "a parallel", "a PS/2", "an RJ-45", "a serial", "an RCA"];
-            var batteries = ["AA", "D"];
+            var batteries = ["D", "AA"];
             var ruleTemplates = [
                                     "The serial number contains a vowel",
                                     "The serial number does not contain a vowel",
@@ -42,12 +42,12 @@
                                     "The bomb has PORTS port",
                                     "The bomb has at least _ BATTERY batteries",
                                     "The bomb has at most _ BATTERY batteries",
-                                    "There are at least ! COLOR buttons",
-                                    "There are at most ! COLOR buttons",
-                                    "The quantity of COLOR and COLOR2 buttons is the same",
-                                    "The quantity of COLOR and COLOR2 buttons is different",
-                                    "The quantity of COLOR buttons is odd",
-                                    "The quantity of COLOR buttons is even",
+                                    "There are at least ! COLORAMOUNT buttons",
+                                    "There are at most ! COLORAMOUNT buttons",
+                                    "The quantity of COLOR1 and COLOR2 buttons is the same",
+                                    "The quantity of COLOR1 and COLOR2 buttons is different",
+                                    "The quantity of COLORPARITY buttons is odd",
+                                    "The quantity of COLORPARITY buttons is even",
                                     "There are no buttons of a unique color",
                                     "There are 5 different colors of buttons"
                                 ];
@@ -55,7 +55,7 @@
             for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
                 for(var j = 0; j < 12; j++){
                     document.getElementById(`diagram${i}`).children[j].className = "highlightable";
-                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent";
+                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent"; //using .fill doesn't work
                 }
             }
             for(var i = 0; i < 12; i++){
@@ -80,9 +80,9 @@
                     ruleTemplates[i] = ruleTemplates[i].replace("PORTS", ports[rnd.next(0, 6)]);
                 if(ruleTemplates[i].includes("BATTERY"))
                     ruleTemplates[i] = ruleTemplates[i].replace("BATTERY", batteries[rnd.next(0, 2)]);
-                if(ruleTemplates[i].includes("COLOR")){
+                if(ruleTemplates[i].includes("COLOR1")){
                     var color1 = rnd.next(0, 5);
-                    ruleTemplates[i] = ruleTemplates[i].replace("COLOR", colors[color1]);
+                    ruleTemplates[i] = ruleTemplates[i].replace("COLOR1", colors[color1]);
                     if(ruleTemplates[i].includes("COLOR2")){
                         var color2;
                         do{
@@ -91,15 +91,22 @@
                         ruleTemplates[i] = ruleTemplates[i].replace("COLOR2", colors[color2]);
                     }
                 }
+                if(ruleTemplates[i].includes("COLORAMOUNT"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("COLORAMOUNT", colors[rnd.next(0, 5)]);
+                if(ruleTemplates[i].includes("COLORPARITY"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("COLORPARITY", colors[rnd.next(0, 5)]);
                 document.getElementById(`rule${i}`).innerText = ruleTemplates[i];
                 var twoCircles = rnd.next(0,3);
                 var filledInCircle = rnd.next(0, 12);
                 document.getElementById(`diagram${i}`).children[filledInCircle].className += "highlightable filledIn";
                 document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
                 if(twoCircles === 2){
-                    filledInCircle = rnd.next(0, 12);
-                    document.getElementById(`diagram${i}`).children[filledInCircle].className += "highlightable filledIn";
-                    document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
+                    var filledInCircle2;
+                    do{
+                        filledInCircle2 = rnd.next(0, 12);
+                    }while(filledInCircle2 === filledInCircle);
+                    document.getElementById(`diagram${i}`).children[filledInCircle2].className += "highlightable filledIn";
+                    document.getElementById(`diagram${i}`).children[filledInCircle2].style = "fill:#000";
                 }
             }
         }
@@ -119,7 +126,8 @@
                 <ul>
                     <li>You must push each of the correct buttons.</li>
                     <li>Use the key below, pressing the buttons colored black, press all that apply.</li>
-                    <li>Each button only needs to be pressed once.</li>
+                    <li>Each button only needs to be pressed once, though there is no penalty for pressing an applicable button more than once.</li>
+                    <li>If checking for amount of AA batteries, check only the ones that come in sets of 2.</li>
                 </ul><br>
                 <div>
                     <div class="main"><span id="rule0"></span><br>

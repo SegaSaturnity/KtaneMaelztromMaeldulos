@@ -10,6 +10,10 @@ public class SomeButtons : MonoBehaviour {
     public KMBombInfo bombInfo;
     public KMAudio audio;
 	public KMColorblindMode colorblind;
+	public KMRuleSeedable rs;
+	
+	private enum Port{DVI, Parallel, PS2, RJ45, Serial, StereoRCA, ComponentVideo, CompositeVideo, USB, HDMI, VGA, AC, PCMIA}
+	private enum Battery{Unknown=0,Empty=0,D=1,AA=2,AAx3=3,AAx4=4}
 	
 	public KMSelectable[] buttons;
 	
@@ -17,6 +21,45 @@ public class SomeButtons : MonoBehaviour {
 	private static int moduleCount;
 	private bool colorblindModeEnabled;
     private int moduleId;
+    private string[] colors = new string[]{"red", "blue", "green", "white", "black"};
+    private string[]ruleTemplates = new string[]{
+                                                 "the serial number contains a vowel",
+                                                 "the serial number does not contain a vowel",
+                                                 "the serial number has a digit over #",
+                                                 "the serial number has a digit under #",
+                                                 "the bomb has PORTS port",
+                                                 "the bomb has at least _ BATTERY batteries",
+                                                 "the bomb has at most _ BATTERY batteries",
+                                                 "there are at least ! COLORAMOUNT buttons",
+                                                 "there are at most ! COLORAMOUNT buttons",
+                                                 "the quantity of COLOR1 and COLOR2 buttons is the same",
+                                                 "the quantity of COLOR1 and COLOR2 buttons is different",
+                                                 "the quantity of COLORPARITY buttons is odd",
+                                                 "the quantity of COLORPARITY buttons is even",
+                                                 "there are no buttons of a unique color",
+                                                 "there are 5 different colors of buttons"
+                                                };
+    private int[,]generatedNumbers = new int[,]{
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1},
+        {-1, -1}
+    };
+    
+    private Dictionary<int, List<int>> buttonsToBePressed = new Dictionary<int, List<int>>();
+    
+    //Debug.LogFormat("[Some Buttons #{0}] Vowel in serial, press 3", moduleId);
 	
 	//Red, Blue, Green, White, Black
 	private static Color[] buttonColours = new Color[]{
@@ -60,70 +103,134 @@ public class SomeButtons : MonoBehaviour {
     }
 
 	void Start () {
+		var RND = rs.GetRNG();
+		RND.ShuffleFisherYates(ruleTemplates);
+		for(int i = 0; i < 12; i++){
+		    int repl = -1;
+		    int repl2 = -1;
+		    if(ruleTemplates[i].Contains("#")){
+		        repl = RND.Next(1, 9);
+		        generatedNumbers[i,0]=repl;
+		        ruleTemplates[i] = ruleTemplates[i].Replace("#", repl.ToString());
+		    }
+		    if(ruleTemplates[i].Contains("_")){
+		        repl = RND.Next(1, 5);
+		        generatedNumbers[i,0]=repl;
+		        ruleTemplates[i] = ruleTemplates[i].Replace("_", repl.ToString());
+		        if(repl == 1){
+		            ruleTemplates[i] = ruleTemplates[i].Replace("batteries", "battery");
+		        }
+		    }
+		    if(ruleTemplates[i].Contains("!")){
+		        repl = RND.Next(1, 12);
+		        generatedNumbers[i,0]=repl;
+		        ruleTemplates[i] = ruleTemplates[i].Replace("!", repl.ToString());
+		        if(repl == 1){
+                    ruleTemplates[i] = ruleTemplates[i].Replace("There are", "There is");
+                    ruleTemplates[i] = ruleTemplates[i].Replace("buttons", "button");
+		        }
+		    }
+            if(ruleTemplates[i].Contains("PORTS")){
+                repl = RND.Next(0, 6);
+                generatedNumbers[i,0]=repl;
+                ruleTemplates[i] = ruleTemplates[i].Replace("PORTS", "a(n) "+((Port)repl).ToString());
+            }
+            if(ruleTemplates[i].Contains("BATTERY")){
+                repl2 = RND.Next(1, 3);
+                generatedNumbers[i,1]=repl2;
+                ruleTemplates[i] = ruleTemplates[i].Replace("BATTERY", ((Battery)repl2).ToString());
+            }
+            if(ruleTemplates[i].Contains("COLOR1")){
+                repl = RND.Next(0, 5);
+                generatedNumbers[i,0]=repl;
+                ruleTemplates[i] = ruleTemplates[i].Replace("COLOR1", colors[repl]);
+                if(ruleTemplates[i].Contains("COLOR2")){
+                    do{
+                        repl2 = RND.Next(0, 5);
+                    }while(repl2 == repl);
+                    generatedNumbers[i,1]=repl2;
+                    ruleTemplates[i] = ruleTemplates[i].Replace("COLOR2", colors[repl2]);
+                }
+            }
+            if(ruleTemplates[i].Contains("COLORAMOUNT")){
+                repl2 = RND.Next(0, 5);
+                generatedNumbers[i,1]=repl2;
+                ruleTemplates[i] = ruleTemplates[i].Replace("COLORAMOUNT", colors[repl2]);
+            }
+            if(ruleTemplates[i].Contains("COLORPARITY")){
+                repl = RND.Next(0, 5);
+                generatedNumbers[i,0]=repl;
+                ruleTemplates[i] = ruleTemplates[i].Replace("COLORPARITY", colors[repl]);
+            }
+            int twoCircles = RND.Next(0, 3);
+            int filledInCircle = RND.Next(0, 12);
+            List<int> circles = new List<int>();
+            circles.Add(filledInCircle);
+            if(twoCircles == 2){
+                int filledInCircle2;
+                do{
+                    filledInCircle2 = RND.Next(0, 12);
+                }while(filledInCircle2 == filledInCircle);
+                circles.Add(filledInCircle2);
+            }
+            buttonsToBePressed.Add(i, circles);
+		}
+		bool serialContainsVowels = bombInfo.GetSerialNumberLetters().Any(x => "AEIOU".Contains(x));
+		bool serialContainsNoVowels = !serialContainsVowels;
+		bool serialDigitOverNumber = bombInfo.GetSerialNumberNumbers().IndexOf(j => j > generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the serial number has a digit over ")), 0]) != -1;
+		bool serialDigitUnderNumber = bombInfo.GetSerialNumberNumbers().IndexOf(j => j < generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the serial number has a digit under ")), 0]) != -1;
+		bool hasGivenPort = bombInfo.GetPortCount(((Port)generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("port")), 0]).ToString()) > 0;
+		bool hasAtLeastNumberBatteries = bombInfo.GetBatteryCount(generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at least ")), 1]) >= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at least ")), 0];
+		bool hasAtMostNumberBatteries = bombInfo.GetBatteryCount(generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at most ")), 1]) <= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at most ")), 0];
+		bool hasAtLeastNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ")), 1]) >= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ")), 0];
+		bool hasAtMostNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ")), 1]) <= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ")), 0];
+		bool quantityColoredSame = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is the same")), 0]) == buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is the same")), 1]);
+		bool quantityColoredDifferent = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is different")), 0]) != buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is different")), 1]);
+		bool quantityOdd = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is odd")), 0]) % 2 == 1;
+		bool quantityEven = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is even")), 0]) % 2 == 0;
+		bool noUniqueColors = buttonSequence.Count(x => x == 0) != 1 && buttonSequence.Count(x => x == 1) != 1 && buttonSequence.Count(x => x == 2) != 1 && buttonSequence.Count(x => x == 3) != 1 && buttonSequence.Count(x => x == 4) != 1;
+		bool fiveDifferentColors = buttonSequence.Count(x => x == 0) >= 1 && buttonSequence.Count(x => x == 1) >= 1 && buttonSequence.Count(x => x == 2) >= 1 && buttonSequence.Count(x => x == 3) >= 1 && buttonSequence.Count(x => x == 4) >= 1;
 		
-		if(bombInfo.GetSerialNumberLetters().Any(x => x == 'A' || x == 'E' || x == 'I' || x == 'O' || x == 'U')){
-			Debug.LogFormat("[Some Buttons #{0}] Vowel in serial, press 3", moduleId);
-			answerSequence[2] = 1;
-		}
-		if(bombInfo.GetSerialNumberNumbers().Any(x => x > 6)){
-			Debug.LogFormat("[Some Buttons #{0}] Digit higher than 6 in serial, press 12", moduleId);
-			answerSequence[11] = 1;
-		}
-		if(bombInfo.IsPortPresent(Port.Parallel)){
-			Debug.LogFormat("[Some Buttons #{0}] Parallel port found, 6", moduleId);
-			answerSequence[5] = 1;
-		}
-		if(bombInfo.GetBatteryCount(Battery.AA) + bombInfo.GetBatteryCount(Battery.AAx3) + bombInfo.GetBatteryCount(Battery.AAx4) >= 1){
-			Debug.LogFormat("[Some Buttons #{0}] AA found, press 10", moduleId);
-			answerSequence[9] = 1;
-		}
-		if(bombInfo.GetBatteryCount(Battery.D) >= 1){
-			Debug.LogFormat("[Some Buttons #{0}] D found, press 5", moduleId);
-			answerSequence[4] = 1;
-		}
-		if(bombInfo.IsPortPresent(Port.PS2)){
-			Debug.LogFormat("[Some Buttons #{0}] PS/2 port found, press 8", moduleId);
-			answerSequence[7] = 1;
-		}
-		if(buttonSequence.Count(s => s == 0) >= 4){
-			Debug.LogFormat("[Some Buttons #{0}] 4+ red buttons, press 4 and 7", moduleId);
-			answerSequence[3] = 1;
-			answerSequence[6] = 1;
-		}
-		if(buttonSequence.Count(s => s == 1) == buttonSequence.Count(s => s == 2)){
-			Debug.LogFormat("[Some Buttons #{0}] Same amount green and blue buttons, press 9 and 10", moduleId);
-			answerSequence[8] = 1;
-			answerSequence[9] = 1;
-		}
-		if(buttonSequence.Count(s => s == 4) % 2 != 0){
-			Debug.LogFormat("[Some Buttons #{0}] Amount black buttons is odd, press 1 and 3", moduleId);
-			answerSequence[0] = 1;
-			answerSequence[2] = 1;
-		}
-		if(buttonSequence.Count(s => s == 0) != 1 && buttonSequence.Count(s => s == 1) != 1 && buttonSequence.Count(s => s == 2) != 1 && buttonSequence.Count(s => s == 3) != 1 && buttonSequence.Count(s => s == 4) != 1){
-			Debug.LogFormat("[Some Buttons #{0}] No unique colors, press 2 and 11", moduleId);
-			answerSequence[1] = 1;
-			answerSequence[10] = 1;
-		}
-		if(buttonSequence.Distinct().ToArray().Length >= 5){
-			Debug.LogFormat("[Some Buttons #{0}] 5 different colors present, press 1 and 7", moduleId);
-			answerSequence[0] = 1;
-			answerSequence[6] = 1;
-		}
+		bool[]allConditions = new bool[]{serialContainsVowels, serialContainsNoVowels, serialDigitOverNumber, serialDigitUnderNumber, hasGivenPort, hasAtLeastNumberBatteries, hasAtMostNumberBatteries, hasAtLeastNumberColorButtons, hasAtMostNumberColorButtons, quantityColoredSame, quantityColoredDifferent, quantityOdd, quantityEven, noUniqueColors, fiveDifferentColors};
+		string[]allConditionsWords = new string[]{
+		                                             "the serial number contains a vowel",
+                                                     "the serial number does not contain a vowel",
+                                                     "the serial number has a digit over ",
+                                                     "the serial number has a digit under ",
+                                                     "port",
+                                                     "the bomb has at least ",
+                                                     "the bomb has at most ",
+                                                     "there are at least ",
+                                                     "there are at most ",
+                                                     " is the same",
+                                                     " is different",
+                                                     " is odd",
+                                                     " is even",
+                                                     "there are no buttons of a unique color",
+                                                     "there are 5 different colors of buttons"
+                                                 };
 		
-		if(!buttonSequence.Contains(3)){
-			Debug.LogFormat("[Some Buttons #{0}] No white buttons, press 6 and 8", moduleId);
-			answerSequence[5] = 1;
-			answerSequence[7] = 1;
+		for(int i = 0; i < 15; i++){
+		    if(allConditions[i] && ruleTemplates.IndexOf(x => x.Contains(allConditionsWords[i])) < 12){
+		        Debug.LogFormat("[Some Buttons #{0}] T{1}, so press the following button(s): {2}.", moduleId, ruleTemplates[ruleTemplates.IndexOf(x => x.Contains(allConditionsWords[i]))].Substring(1), string.Join(", ", buttonsToBePressed[ruleTemplates.IndexOf(x => x.Contains(allConditionsWords[i]))].Select(x => (x+1).ToString()).ToArray()));
+		        foreach(int button in buttonsToBePressed[ruleTemplates.IndexOf(x => x.Contains(allConditionsWords[i]))]){
+		            answerSequence[button] = 1;
+		        }
+		    }
 		}
-		
+		List<string> buttonsFinal = new List<string>();
+		for(int i = 0; i < 12; i++){
+		    if(answerSequence[i] == 1){
+		        buttonsFinal.Add((i+1).ToString());
+		    }
+		}
+		Debug.LogFormat("[Some Buttons #{0}] The following button(s) should be pressed: {1}", moduleId, string.Join(", ", buttonsFinal.ToArray()));
 	}
 	
 	void pressPos( int pos ){
-		if (isSolved) return;
-		
 		audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
 		buttons[pos].AddInteractionPunch();
+		if (isSolved) return;
 		if (answerSequence[pos] == 0) {
 			Debug.LogFormat("[Some Buttons #{0}] Pressed position {1}, causing a strike.", moduleId, pos+1);
 			module.HandleStrike();
@@ -136,5 +243,37 @@ public class SomeButtons : MonoBehaviour {
 				module.HandlePass();
 			}
 		}
+	}
+	
+	string TwitchHelpMessage = "!{0}, then a sequence of numbers to press the corresponding buttons (buttons labeled in reading order starting from 1). For example, !{0} 1 4 5 8 10 to press buttons 1, 4, 5, 8 and 10.";
+	string TwitchManualCode = "https://ktane.timwi.de/HTML/Some%20Buttons.html";
+
+	IEnumerator ProcessTwitchCommand(string command){
+	    yield return null;
+	    string[]commandParts = command.Split(' ');
+	    int current = -1;
+	    foreach(string part in commandParts){
+	        if(int.TryParse(part, out current)){
+	            if(current < 1 || current > 12){
+	                yield return "sendtochaterror {0}, your command contains a number outside the range of 1 to 12.";
+	                yield break;
+	            }
+	        }
+	        else{
+	            yield return "sendtochaterror {0}, your command must consist entirely of numbers from 1 to 12.";
+	            yield break;
+	        }
+	    }
+	    foreach(string part in commandParts)
+	        pressPos(int.Parse(part)-1);
+	}
+	
+	void TwitchHandleForcedSolve(){
+	    if(isSolved)
+	        return;
+	    for(int i = 0; i < 12; i++){
+	        if(answerSequence[i] == 1)
+	            pressPos(i);
+	    }
 	}
 }
