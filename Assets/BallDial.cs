@@ -9,6 +9,7 @@ public class BallDial : MonoBehaviour {
     public KMBombModule module;
     public KMBombInfo bombInfo;
     public KMAudio audio;
+    public KMRuleSeedable rs;
 	
 	public KMSelectable[] b_directions;
 	public KMSelectable b_select;
@@ -21,7 +22,7 @@ public class BallDial : MonoBehaviour {
 	public Material[] faces;
 	public MeshRenderer[] b_texts;
 	
-	private int[] table = new int[]{ 2, 3, 0, 2, 3, 0, 0, 1, 1, 2, 3, 0, 3, 3, 1, 2, 0, 2, 1, 3 };
+	private int[] table = new int[20];
 	
 	private bool moving = false;
 	private int press_n = 0;
@@ -31,15 +32,16 @@ public class BallDial : MonoBehaviour {
 	private int display_type = 0;
 	private int spins = 0;
 	private int target = 0;
-
-	void Start () {
-		
-		Debug.LogFormat("[Ball Dial #{0}] Module started.", moduleId);
-		StartCoroutine(rotateBall(2));
-	}
+	private string[] s_dirs = new string[] {"up", "right", "down", "left"};
 	
 	void Awake () {
 		moduleId = moduleCount++;
+		
+		var RND = rs.GetRNG();
+		
+		for(int i = 0; i < 20; i++){
+		    table[i] = RND.Next(0, 4);
+		}
 		
 		foreach (KMSelectable d in b_directions) {
 			int i = System.Array.IndexOf(b_directions, d);
@@ -49,9 +51,14 @@ public class BallDial : MonoBehaviour {
 		b_select.OnInteract += delegate () { submit(); return false; };
 	
 	}
+
+	void Start () {
+		
+		Debug.LogFormat("[Ball Dial #{0}] Module started.", moduleId);
+		StartCoroutine(rotateBall(2));
+	}
 	
 	void moveDir(int d) {
-		string[] s_dirs = new string[] {"up", "right", "down", "left"};
 		string[] s_type = new string[] {"arrow", "number", "word", "2 elements", "3 elements"};
 		
 		if (moving) return;
@@ -190,11 +197,11 @@ public class BallDial : MonoBehaviour {
 	//This has to be a war crime or something.
 	//Please simplify this later, me
 	private int[] generateFace(int rnd) {
+		display = -1;
 		if (press_n < 1) {
 			clock = 0;
 			display_type = rnd;
 		}
-		display = -1;
 		
 		if (spins+1 % 5 == 0) {
 			rnd = -1;
@@ -326,5 +333,50 @@ public class BallDial : MonoBehaviour {
 	
 	private bool displayInSerial() {
 		return bombInfo.GetSerialNumberNumbers().Any(x => x == display);
+	}
+	
+	string TwitchHelpMessage = "!{0} up/down/left/right to move a direction, and !{0} submit to submit. Note that the inputted direction is NOT relative to a given arrow.";
+	string TwitchManualCode = "https://ktane.timwi.de/HTML/Ball%20Dial.html";
+	
+	IEnumerator ProcessTwitchCommand(string command){
+	    yield return null;
+	    if(command.Contains(" ")){
+	        yield return "sendtochaterror {0}, too many parameters.";
+	        yield break;
+	    }
+	    switch(command.ToLowerInvariant()){
+	        case "up":
+	            moveDir(0);
+	            break;
+	        case "down":
+	            moveDir(2);
+	            break;
+	        case "left":
+	            moveDir(3);
+	            break;
+	        case "right":
+	            moveDir(1);
+	            break;
+	        case "submit":
+	            submit();
+	            break;
+	        default:
+	            yield return "sendtochaterror {0}, your command must consist of up, down, left, right, or submit.";
+	            break;
+	    }
+	}
+	
+	IEnumerator TwitchHandleForcedSolve(){
+	    if(isSolved)
+	        yield break;
+	    yield return null;
+	    do{
+	        yield return new WaitWhile(() => moving);
+	        if(displayInSerial()){
+	            submit();
+	            yield break;
+	        }
+	        moveDir(target);
+	    }while(!isSolved);
 	}
 }

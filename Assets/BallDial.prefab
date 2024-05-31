@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: 114291684632880310}
   - component: {fileID: 114908894338839460}
   - component: {fileID: 114805095257117542}
+  - component: {fileID: 114531736451946508}
   m_Layer: 0
   m_Name: BallDial
   m_TagString: Untagged
@@ -1420,7 +1421,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8a7f188811d0e1b498aec5c117dd02f4, type: 2}
+  - {fileID: 2100000, guid: a1dd7cd457a01c64880e3561a4ed7337, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1828,7 +1829,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8a7f188811d0e1b498aec5c117dd02f4, type: 2}
+  - {fileID: 2100000, guid: a1dd7cd457a01c64880e3561a4ed7337, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2463,6 +2464,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1.1, y: 1.1, z: 0.5}
   OutlineAmount: 0
+--- !u!114 &114531736451946508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427864483242562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114539495570078832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2608,6 +2621,7 @@ MonoBehaviour:
   module: {fileID: 114103340487979442}
   bombInfo: {fileID: 114468867668486246}
   audio: {fileID: 114487422395871178}
+  rs: {fileID: 114531736451946508}
   b_directions:
   - {fileID: 114745795018700080}
   - {fileID: 114872890173703790}
