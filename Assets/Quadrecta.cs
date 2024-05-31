@@ -191,7 +191,7 @@ public class Quadrecta : MonoBehaviour {
     IEnumerator ProcessTwitchCommand(string command)
     {
         yield return null;
-        string[]commandParts=command.Split(' ');
+        string[]commandParts=command.ToLowerInvariant().Split(' ');
 	    if(commandParts.Length < 2){
 	        yield return "sendtochaterror {0}, too few parameters.";
 	        yield break;

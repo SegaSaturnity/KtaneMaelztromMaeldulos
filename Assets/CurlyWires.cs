@@ -131,6 +131,7 @@ public class CurlyWires : MonoBehaviour {
 		if (cut_count == 3) {
 			audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
 			Debug.LogFormat("[Curly Wires #{0}] Third wire cut, module solved!", moduleId);
+			isSolved = true;
 			module.HandlePass();
 			return;
 		}
@@ -152,7 +153,7 @@ public class CurlyWires : MonoBehaviour {
 	
 	IEnumerator ProcessTwitchCommand(string command){
         yield return null;
-	    string[]commandParts = command.Split(' ');
+	    string[]commandParts = command.ToLowerInvariant().Split(' ');
 	    if(commandParts.Length < 2){
 	        yield return "sendtochaterror {0}, too few parameters.";
 	        yield break;

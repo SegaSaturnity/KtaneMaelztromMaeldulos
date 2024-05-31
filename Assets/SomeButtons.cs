@@ -250,7 +250,7 @@ public class SomeButtons : MonoBehaviour {
 
 	IEnumerator ProcessTwitchCommand(string command){
 	    yield return null;
-	    string[]commandParts = command.Split(' ');
+	    string[]commandParts = command.ToLowerInvariant().Split(' ');
 	    int current = -1;
 	    foreach(string part in commandParts){
 	        if(int.TryParse(part, out current)){

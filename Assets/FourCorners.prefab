@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 114998139273603294}
   - component: {fileID: 114732205019836652}
   - component: {fileID: 114959047788748116}
+  - component: {fileID: 114692768223879724}
   m_Layer: 0
   m_Name: FourCorners
   m_TagString: Untagged
@@ -3560,6 +3561,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - Standard
+--- !u!114 &114692768223879724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1156644530963056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114726919211469402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3586,6 +3599,7 @@ MonoBehaviour:
   bombInfo: {fileID: 114726919211469402}
   audio: {fileID: 114741320285516694}
   colorblind: {fileID: 114959047788748116}
+  rs: {fileID: 114692768223879724}
   button: {fileID: 114306194913329842}
   lights:
   - {fileID: 108475225242898126}
@@ -3761,7 +3775,7 @@ MonoBehaviour:
   Children:
   - {fileID: 114306194913329842}
   IsPassThrough: 0
-  ChildRowLength: 0
+  ChildRowLength: 1
   Highlight: {fileID: 114463523536768848}
   SelectableColliders: []
   DefaultSelectableIndex: 0

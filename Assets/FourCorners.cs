@@ -9,6 +9,7 @@ public class FourCorners : MonoBehaviour {
     public KMBombInfo bombInfo;
     public KMAudio audio;
 	public KMColorblindMode colorblind;
+	public KMRuleSeedable rs;
 	
 	public KMSelectable button;
 	public Light[] lights;
@@ -22,6 +23,7 @@ public class FourCorners : MonoBehaviour {
 	private int[] actives;
 	private Color[] colors;
 	private int iwin;
+	private bool buttonHeld = false;
 	
 	//Red, Blue, Green, White, Grey
 	private static Color[] lightColours = new Color[]{
@@ -32,12 +34,17 @@ public class FourCorners : MonoBehaviour {
 		new Color(0.4f, 0.4f, 0.4f),		
     };
 	
-	private string[] table = new string[]{ "01", "22", "11", "00", "12", "00", "02", "11", "22", "11", "01", "12", "02", "12", "00", "22", "00", "02", "22", "01", "11", "01", "12", "02" };
+	private string[] table = new string[24];
 	
 	private string[] l_col = new string[]{ "01", "03", "02", "13", "12", "23" };
 	
 	void Awake () {
 		moduleId = moduleCount++;
+		
+		var RND = rs.GetRNG();
+		for(int i = 0; i < 24; i++){
+		    table[i] = RND.Next(0,3).ToString()+RND.Next(0,3).ToString();
+		}
 		
 		colorblindModeEnabled = colorblind.ColorblindModeActive;
 		
@@ -56,6 +63,7 @@ public class FourCorners : MonoBehaviour {
 	}
 	
 	void pressButton() {
+	    buttonHeld = true;
 		audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonPress, transform);
 		button.AddInteractionPunch();
 		actives = new int[] {0, 0};
@@ -83,6 +91,7 @@ public class FourCorners : MonoBehaviour {
 	}
 	
 	void releaseButton() {
+	    buttonHeld = false;
 		audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, transform);
 		lightsOn = false;
 		
@@ -124,8 +133,9 @@ public class FourCorners : MonoBehaviour {
 		int irow = System.Array.IndexOf(lightColours, button_color);
 		Debug.LogFormat("[Four Corners #{0}] Button color: {1}.", moduleId, n_colors[irow]);
 		string col_table = table[icol * 4 + irow];
+		string col_table2 = ""+table[icol * 4 + irow][1]+table[icol * 4 + irow][0];
 		Debug.LogFormat("[Four Corners #{0}] Expected colors: {1}, {2}.", moduleId, n_colors[col_table[0] & 0x0f], n_colors[col_table[1] & 0x0f]);
-		if (s_check != col_table) {
+		if (s_check != col_table && s_check != col_table2) {
 			Debug.LogFormat("[Four Corners #{0}] Released at wrong time ({1}, {2}), causing a strike.", moduleId, n_colors[s_check[0] & 0x0f], n_colors[s_check[1] & 0x0f]);
 			module.HandleStrike();
 			return;
@@ -186,5 +196,61 @@ public class FourCorners : MonoBehaviour {
 		
 		
     }
+    
+    string TwitchHelpMessage = "!{0} hold to begin holding the button, and !{0} release RG to release when the lights are red and green (or green and red).";
+    string TwitchManualCode = "https://ktane.timwi.de/HTML/Four%20Corners.html";
+    
+    IEnumerator ProcessTwitchCommand(string command){
+        yield return null;
+        string[]commandParts = command.ToLowerInvariant().Split(' ');
+        if((commandParts[0] == "hold" && commandParts.Length > 1) || (commandParts[0] == "release" && commandParts.Length > 2)){
+            yield return "sendtochaterror {0}, too many parameters.";
+        }
+        else if(commandParts[0] == "release" && commandParts.Length < 2){
+            yield return "sendtochaterror {0}, too few parameters.";
+        }
+        else if(commandParts[0] == "release" && commandParts[1].Length > 2){
+            yield return "sendtochaterror {0}, too long of a sequence of colors.";
+        }
+        else if(commandParts[0] == "release" && commandParts[1].Length < 2){
+            yield return "sendtochaterror {0}, too short of a sequence of colors.";
+        }
+        else if(commandParts[0] == "release" && !"RGB".Contains(commandParts[1][0].ToString().ToUpperInvariant()[0]) && !"RGB".Contains(commandParts[1][1].ToString().ToUpperInvariant()[0])){
+            yield return "sendtochaterror {0}, invalid colors.";
+        }
+        else if(commandParts[0] == "hold" && buttonHeld){
+            yield return "sendtochaterror {0}, the button is already being held.";
+        }
+        else if(commandParts[0] == "release" && !buttonHeld){
+            yield return "sendtochaterror {0}, the button is not being held.";
+        }
+        else if(commandParts[0] == "hold"){
+            yield return button;
+        }
+        else if(commandParts[0] == "release"){
+            yield return new WaitUntil(() => (lights[actives[0]].color == lightColours["RBG".IndexOf(commandParts[1][0].ToString().ToUpperInvariant()[0])] && lights[actives[1]].color == lightColours["RBG".IndexOf(commandParts[1][1].ToString().ToUpperInvariant()[0])]) || (lights[actives[1]].color == lightColours["RBG".IndexOf(commandParts[1][0].ToString().ToUpperInvariant()[0])] && lights[actives[0]].color == lightColours["RBG".IndexOf(commandParts[1][1].ToString().ToUpperInvariant()[0])]));
+            yield return button;
+        }
+    }
 	
+	
+	IEnumerator TwitchHandleForcedSolve(){
+	    if(isSolved)
+	        yield break;
+	    while(!isSolved){
+	        if(!buttonHeld)
+	            pressButton();
+	        Color button_color = button.GetComponent<MeshRenderer>().material.color;
+	        string l_coli = "";
+	        System.Array.Sort(actives);
+	        foreach (int i in actives) {
+		        l_coli += (i - 1).ToString();
+	        }
+	        int icol = System.Array.IndexOf(l_col, l_coli);
+	        int irow = System.Array.IndexOf(lightColours, button_color);
+		    string col_table = table[icol * 4 + irow];
+            yield return new WaitUntil(() => (lights[actives[0]].color == lightColours[col_table[0] & 0x0f] && lights[actives[1]].color == lightColours[col_table[1] & 0x0f]) || (lights[actives[1]].color == lightColours[col_table[0] & 0x0f] && lights[actives[0]].color == lightColours[col_table[1] & 0x0f]));
+            releaseButton();
+	    }
+	}
 }
