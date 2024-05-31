@@ -18,7 +18,29 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            var firstTable = document.getElementById("firstTable");
+            var secondTable = document.getElementById("secondTable");
+            var startingPositions = [
+                ["RLLL", "LLLR", "RLRR", "RRRL", "RLRL"],
+                ["LLLL", "RRLL", "LRLR", "LRRL", "LLRL"],
+                ["LRRR", "LLRR", "RLLR", "LRLL", "RRLR"],
+                ["RRLR", "LRRL", "LLRL", "RLRR", "LRLR"]
+            ];
+            var characters = [
+                ["E G 4 9", "I N 5 6", "D T 2 3", "C L 7 8"],
+                ["Q U 2 8", "P Z 3 7", "H V 4 5", "B W 6 9"],
+                ["J R 6 7", "M X 2 9", "K A 5 8", "S F 3 4"]
+            ];
+            for(var i = 0; i < 4; i++){
+                for(var j = 1; j < 6; j++){
+                    firstTable.children[i].children[j].innerHTML = "<b>" + startingPositions[i][j - 1] + "</b>";
+                }
+            }
+            for(var i = 0; i < 3; i++){
+                for(var j = 1; j < 5; j++){
+                    secondTable.children[i].children[j].innerHTML = "<b>" + characters[i][j - 1] + "</b>";
+                }
+            }
         }
         function setRules(rnd){
             var LR = ["L", "R"];
@@ -29,13 +51,13 @@
             var secondTable = document.getElementById("secondTable");
             for(var i = 0; i < 4; i++){
                 for(var j = 1; j < 6; j++){
-                    firstTable.children[i].children[j].innerText = LR[rnd.next(0,2)] + LR[rnd.next(0,2)] + LR[rnd.next(0,2)] + LR[rnd.next(0,2)];
+                    firstTable.children[i].children[j].innerHTML = "<b>" + LR[rnd.next(0,2)] + LR[rnd.next(0,2)] + LR[rnd.next(0,2)] + LR[rnd.next(0,2)] + "</b>";
                 }
             }
             var index = 0;
             for(var i = 0; i < 3; i++){
                 for(var j = 1; j < 5; j++){
-                    secondTable.children[i].children[j].innerText = letters[index] + letters[index + 1] + rnd.next(0, 10) + rnd.next(0, 10);
+                    secondTable.children[i].children[j].innerHTML = "<b>" + letters[index] + " " + letters[index + 1] + " " + rnd.next(0, 10) + " " + rnd.next(0, 10) + "</b>";
                     index += 2;
                 }
             }
@@ -57,7 +79,7 @@
                     <li>You must flip all of the breakers to the right.</li>
                     <li>The black breakers may be flipped at any time.</li>
                     <li>Only flip a colorful breaker when the black breakers are in the proper positions. Order breakers top to bottom.</li>
-                    <li>Use the first table below to determine the positions the black breakers must start in for flipping a colorful breaker; R for right, L for left.</li>
+                    <li>Use the first table below to determine the positions the black breakers must start in, based on the color of the colorful breaker to be flipped.</li>
                     <li>From the starting position, flip the black breakers back and forth according the the criteria listed in the second table below before flipping the respective colorful breaker.</li>
                 </ul>
                 <h3>Starting Position</h3>

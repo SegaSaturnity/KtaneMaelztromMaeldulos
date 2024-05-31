@@ -39,10 +39,13 @@ public class BallDial : MonoBehaviour {
 		
 		var RND = rs.GetRNG();
 		
-		for(int i = 0; i < 20; i++){
-		    table[i] = RND.Next(0, 4);
+		if(RND.Seed == 1){
+		    table = new int[]{2,0,2,3,3,0,1,0,1,3,0,2,3,1,2,3,0,1,3,2};
+		}else{
+		    for(int i = 0; i < 20; i++){
+		        table[i] = RND.Next(0, 4);
+		    }
 		}
-		
 		foreach (KMSelectable d in b_directions) {
 			int i = System.Array.IndexOf(b_directions, d);
 			d.OnInteract += delegate () { moveDir(i); return false; };
@@ -60,6 +63,7 @@ public class BallDial : MonoBehaviour {
 	
 	void moveDir(int d) {
 		string[] s_type = new string[] {"arrow", "number", "word", "2 elements", "3 elements"};
+		b_directions[d].AddInteractionPunch();
 		
 		if (moving) return;
 		Debug.LogFormat("[Ball Dial #{0}] Direction pressed: {1}, display type was: {2}, expected: {3}.", moduleId, s_dirs[mod(d - clock, 4)], s_type[display_type], s_dirs[target]);

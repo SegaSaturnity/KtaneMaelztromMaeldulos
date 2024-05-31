@@ -30,23 +30,37 @@ public class _breakersScript:ModdedModule{
 
     void Start(){
         var RND = rs.GetRNG();
-        RND.ShuffleFisherYates(letters);
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 5; j++){
-                for(int k = 0; k < 4; k++){
-                    startingPositions[i,j,k]=LR[RND.Next(0,2)];
+        if(RND.Seed == 1){
+            startingPositions = new bool[,,]{
+                {{true, false, false, false}, {false, false, false, true}, {true, false, true, true}, {true, true, true, false}, {true, false, true, false}},
+                {{false, false, false, false}, {true, true, false, false}, {false, true, false, true}, {false, true, true, false}, {false, false, true, false}},
+                {{false, true, true, true}, {false, false, true, true}, {true, false, false, true}, {false, true, false, false}, {true, true, false, true}},
+                {{true, true, false, true}, {false, true, true, false}, {false, false, true, false}, {true, false, true, true}, {false, true, false, true}}
+            };
+            furtherAdjustments = new char[,,]{
+                {{'E', 'G', '4', '9'}, {'I', 'N', '5', '6'}, {'D', 'T', '2', '3'}, {'C', 'L', '7', '8'}},
+                {{'Q', 'U', '2', '8'}, {'P', 'Z', '3', '7'}, {'H', 'V', '4', '5'}, {'B', 'W', '6', '9'}},
+                {{'J', 'R', '6', '7'}, {'M', 'X', '2', '9'}, {'K', 'A', '5', '8'}, {'S', 'F', '3', '4'}}
+            };
+        }else{
+            RND.ShuffleFisherYates(letters);
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 5; j++){
+                    for(int k = 0; k < 4; k++){
+                        startingPositions[i,j,k]=LR[RND.Next(0,2)];
+                    }
                 }
             }
-        }
-        int index = 0;
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 4; j++){
-                for(int k = 0; k < 2; k++){
-                    furtherAdjustments[i,j,k] = letters[index];
-                    index++;
-                }
-                for(int k = 2; k < 4; k++){
-                    furtherAdjustments[i,j,k] = (char)(RND.Next(0, 10) + 48);
+            int index = 0;
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 4; j++){
+                    for(int k = 0; k < 2; k++){
+                        furtherAdjustments[i,j,k] = letters[index];
+                        index++;
+                    }
+                    for(int k = 2; k < 4; k++){
+                        furtherAdjustments[i,j,k] = (char)(RND.Next(0, 10) + 48);
+                    }
                 }
             }
         }

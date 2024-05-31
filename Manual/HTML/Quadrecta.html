@@ -51,7 +51,35 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            var wordsRuleSeed1 = ["Okay", "Wait", "What", "Now", "When", "Stop", "Where"];
+            var indices = [
+                [2,3,5,1,4,6],
+                [3,4,6,2,5,0],
+                [4,5,0,3,6,1],
+                [5,6,1,4,0,2],
+                [6,0,2,5,1,3],
+                [0,1,3,6,2,4],
+                [1,2,4,0,3,5]
+            ];
+            var releaseNumbers = [
+                ["4", "7", "1", "8", "3", "2", "5"],
+                ["9", "5", "3", "6", "1", "4", "8"],
+                ["3", "8", "2", "5", "7", "9", "6"]
+            ];
+            var firstTable = document.getElementById("firstTable").children[0];
+            var secondTable = document.getElementById("secondTable").children[0];
+            for(var i = 0; i < 7; i++){
+                firstTable.children[i+2].children[0].innerText = wordsRuleSeed1[i];
+                secondTable.children[1].children[i].innerText = wordsRuleSeed1[i];
+                firstTable.children[i+2].children[1].innerText = wordsRuleSeed1[indices[i][0]]+" or "+wordsRuleSeed1[indices[i][1]];
+                firstTable.children[i+2].children[2].innerText = wordsRuleSeed1[indices[i][2]]+" or "+wordsRuleSeed1[indices[i][3]];
+                firstTable.children[i+2].children[3].innerText = wordsRuleSeed1[indices[i][4]]+" or "+wordsRuleSeed1[indices[i][5]];
+            }
+            for(var i = 2; i < 5; i++){
+                for(var j = 1; j < 8; j++){
+                    secondTable.children[i].children[j].innerHTML = "<b>"+releaseNumbers[i - 2][j - 1]+"</b>";
+                }
+            }
         }
         function setRules(rnd){
             var words = ["Okay", "Wait", "What", "Now", "When", "Stop", "Where", "Again", "Blank", "Repeat"];

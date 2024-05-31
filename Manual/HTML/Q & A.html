@@ -36,7 +36,22 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            var table = document.getElementById("main").children[0];
+            var wordsRuleSeed1 = [
+                ["THESE", "THEY", "THERE", "THEM", "THEN", "THOSE"],
+                ["THIS", "THESE", "THEM", "THAT", "THEY", "THERE"],
+                ["THEY", "THEN", "THOSE", "THERE", "THAT", "THIS"],
+                ["THEN", "THAT", "THIS", "THOSE", "THEM", "THESE"],
+                ["THOSE", "THIS", "THAT", "THEN", "THESE", "THEM"],
+                ["THEM", "THERE", "THEY", "THESE", "THOSE", "THEN"],
+                ["THERE", "THOSE", "THEN", "THEY", "THIS", "THAT"],
+                ["THAT", "THEM", "THESE", "THIS", "THERE", "THEY"]
+            ];
+            for(var i = 1; i < 7; i++){
+                for(var j = 2; j < 10; j++){
+                    table.children[j].children[i].innerHTML = "<b>"+wordsRuleSeed1[j - 2][i - 1]+"</b>";
+                }
+            }
         }
         function setRules(rnd){
             var words = ["THAT", "THEN", "THERE", "THEM", "THEY", "THIS", "THESE", "THOSE"];
@@ -69,7 +84,7 @@
                 <ul>
                     <li>You must press the correct answer buttons until all questions are answered.</li>
                     <li>Each time an answer button is pressed, a new question will appear on the display.</li>
-                    <li>Used the displayed question and the previous correct answer<br>
+                    <li>Use the displayed question and the previous correct answer<br>
                         in the table below to determine the next answer to press.</li>
                     <li>Begin by pressing the bottom right answer button.</li>
                 </ul><br>

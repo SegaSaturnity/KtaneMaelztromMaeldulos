@@ -49,27 +49,39 @@ public class Quadrecta : MonoBehaviour {
 	
 	void Awake () {
 	    var RND = rs.GetRNG();
-	    RND.ShuffleFisherYates(words);
-	    for(int i = 0; i < 7; i++){
-	        relatedWords[i,0,0]=words[indices[i][0]];
-	        relatedWords[i,0,1]=words[indices[i][1]];
-	        relatedWords[i,1,0]=words[indices[i][2]];
-	        relatedWords[i,1,1]=words[indices[i][3]];
-	        relatedWords[i,2,0]=words[indices[i][4]];
-	        relatedWords[i,2,1]=words[indices[i][5]];
+	    if(RND.Seed == 1){
+	        for(int i = 0; i < 7; i++){
+	            relatedWords[i,0,0]=words[indices[i][0]];
+	            relatedWords[i,0,1]=words[indices[i][1]];
+	            relatedWords[i,1,0]=words[indices[i][2]];
+	            relatedWords[i,1,1]=words[indices[i][3]];
+	            relatedWords[i,2,0]=words[indices[i][4]];
+	            relatedWords[i,2,1]=words[indices[i][5]];
+	        }
+	        table = new int[]{4, 7, 1, 8, 3, 2, 5, 9, 5, 3, 6, 1, 4, 8, 3, 8, 2, 5, 7, 9, 6};
+	    }else{
+	        RND.ShuffleFisherYates(words);
+	        for(int i = 0; i < 7; i++){
+	            relatedWords[i,0,0]=words[indices[i][0]];
+	            relatedWords[i,0,1]=words[indices[i][1]];
+	            relatedWords[i,1,0]=words[indices[i][2]];
+	            relatedWords[i,1,1]=words[indices[i][3]];
+	            relatedWords[i,2,0]=words[indices[i][4]];
+	            relatedWords[i,2,1]=words[indices[i][5]];
+	        }
+	        for(int i = 0; i < 21; i++){
+	            table[i] = RND.Next(0, 10);
+	        }
 	    }
-	    for(int i = 0; i < 21; i++){
-	        table[i] = RND.Next(0, 10);
-	    }
-	    combinations = new string[][]{
-	        new string[]{words[0], words[1], words[2], words[4]},
-	        new string[]{words[1], words[0], words[3], words[6]},
-	        new string[]{words[0], words[2], words[5], words[6]},
-	        new string[]{words[0], words[3], words[4], words[5]},
-	        new string[]{words[1], words[2], words[3], words[5]},
-	        new string[]{words[1], words[4], words[5], words[6]},
-	        new string[]{words[2], words[3], words[4], words[6]}
-	    };
+        combinations = new string[][]{
+            new string[]{words[0], words[1], words[2], words[4]},
+            new string[]{words[1], words[0], words[3], words[6]},
+            new string[]{words[0], words[2], words[5], words[6]},
+            new string[]{words[0], words[3], words[4], words[5]},
+            new string[]{words[1], words[2], words[3], words[5]},
+            new string[]{words[1], words[4], words[5], words[6]},
+            new string[]{words[2], words[3], words[4], words[6]}
+        };
 		int rand = UnityEngine.Random.Range(0,6);
 		moduleId = moduleCount++;
 		selected = combinations[rand];

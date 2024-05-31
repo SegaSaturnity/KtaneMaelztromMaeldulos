@@ -28,20 +28,50 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
+                for(var j = 0; j < 12; j++){
+                    document.getElementById(`diagram${i}`).children[j].className = "highlightable";
+                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent"; //using .fill doesn't work
+                }
+            }
+            var rulesRuleSeed1 = ["The serial number contains a vowel","The bomb has a\nlit FRK indicator","The serial number does\nnot contain a vowel","The bomb has at\nleast 1 AA battery","The bomb has at\nmost 1 D battery","The bomb has a\nPS/2 port","There are at\nleast 4 red buttons","The quantity of blue and green buttons is the same","The quantity of\nblack buttons is odd","There are no buttons\nof a unique color","There are 5 different colors of buttons","There are at most 0\nwhite buttons"];
+            var filledInRuleSeed1 = [
+                [2],
+                [11],
+                [5],
+                [9],
+                [4],
+                [7],
+                [3, 6],
+                [8, 9],
+                [0, 2],
+                [1, 10],
+                [0, 6],
+                [5, 7]
+            ];
+            for(var i = 0; i < 12; i++){
+                document.getElementById(`rule${i}`).innerText = rulesRuleSeed1[i];
+                for(var fill of filledInRuleSeed1[i]){
+                    document.getElementById(`diagram${i}`).children[fill].className = "highlightable filledIn";
+                    document.getElementById(`diagram${i}`).children[fill].style = "fill:#000";
+                }
+            }
         }
         function setRules(rnd){
             var colors = ["red", "blue", "green", "white", "black"];
-            var ports = ["a DVI", "a parallel", "a PS/2", "an RJ-45", "a serial", "an RCA"];
+            var ports = ["a DVI", "a parallel", "a PS/2", "an RJ-45", "a serial", "a Stereo RCA"];
+            var indicatorLights = ["an unlit", "a lit"];
+            var indicatorLabels = ["SND", "CLR", "CAR", "IND", "FRQ", "SIG", "NSA", "MSA", "TRN", "BOB", "FRK"];
             var batteries = ["D", "AA"];
-            var ruleTemplates = [
+            var ruleTemplatesEdgework = [
                                     "The serial number contains a vowel",
                                     "The serial number does not contain a vowel",
-                                    "The serial number has a digit over #",
-                                    "The serial number has a digit under #",
                                     "The bomb has\nPORTS port",
+                                    "The bomb has\nLIGHT IND indicator",
                                     "The bomb has at least _ BATTERY batteries",
-                                    "The bomb has at most _ BATTERY batteries",
+                                    "The bomb has at most _ BATTERY batteries"
+                                ];
+            var ruleTemplatesButtons = [
                                     "There are at least ! COLORAMOUNT buttons",
                                     "There are at most ! COLORAMOUNT buttons",
                                     "The quantity of COLOR1 and COLOR2 buttons is the same",
@@ -51,7 +81,9 @@
                                     "There are no buttons of a unique color",
                                     "There are 5 different colors of buttons"
                                 ];
-            rnd.shuffleFisherYates(ruleTemplates);
+            rnd.shuffleFisherYates(ruleTemplatesEdgework);
+            rnd.shuffleFisherYates(ruleTemplatesButtons);
+            var ruleTemplates = ruleTemplatesEdgework.concat(ruleTemplatesButtons);
             for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
                 for(var j = 0; j < 12; j++){
                     document.getElementById(`diagram${i}`).children[j].className = "highlightable";
@@ -59,8 +91,6 @@
                 }
             }
             for(var i = 0; i < 12; i++){
-                if(ruleTemplates[i].includes("#"))
-                    ruleTemplates[i] = ruleTemplates[i].replace("#", rnd.next(1, 9));
                 if(ruleTemplates[i].includes("_")){
                         var number = rnd.next(1, 5);
                         ruleTemplates[i] = ruleTemplates[i].replace("_", number);
@@ -69,7 +99,7 @@
                         }
                     }
                 if(ruleTemplates[i].includes("!")){
-                        var number = rnd.next(1, 12);
+                        var number = rnd.next(0, 13);
                         ruleTemplates[i] = ruleTemplates[i].replace("!", number);
                         if(number === 1){
                             ruleTemplates[i] = ruleTemplates[i].replace("There are", "There is");
@@ -78,6 +108,10 @@
                     }
                 if(ruleTemplates[i].includes("PORTS"))
                     ruleTemplates[i] = ruleTemplates[i].replace("PORTS", ports[rnd.next(0, 6)]);
+                if(ruleTemplates[i].includes("LIGHT"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("LIGHT", indicatorLights[rnd.next(0, 2)]);
+                if(ruleTemplates[i].includes("IND"))
+                    ruleTemplates[i] = ruleTemplates[i].replace("IND", indicatorLabels[rnd.next(0, 12)]);
                 if(ruleTemplates[i].includes("BATTERY"))
                     ruleTemplates[i] = ruleTemplates[i].replace("BATTERY", batteries[rnd.next(0, 2)]);
                 if(ruleTemplates[i].includes("COLOR1")){
@@ -96,16 +130,25 @@
                 if(ruleTemplates[i].includes("COLORPARITY"))
                     ruleTemplates[i] = ruleTemplates[i].replace("COLORPARITY", colors[rnd.next(0, 5)]);
                 document.getElementById(`rule${i}`).innerText = ruleTemplates[i];
-                var twoCircles = rnd.next(0,3);
                 var filledInCircle = rnd.next(0, 12);
-                document.getElementById(`diagram${i}`).children[filledInCircle].className += "highlightable filledIn";
+                if(ruleTemplates.indexOf("The serial number contains a vowel") < i && ruleTemplates[i] === "The serial number does not contain a vowel"){
+                    while(document.getElementById(`diagram${ruleTemplates.indexOf("The serial number contains a vowel")}`).children[filledInCircle].style.fill === "rgb(0, 0, 0)"){
+                        filledInCircle = rnd.next(0, 12);
+                    }
+                }
+                if(ruleTemplates.indexOf("The serial number does not contain a vowel") < i && ruleTemplates[i] === "The serial number contains a vowel"){
+                    while(document.getElementById(`diagram${ruleTemplates.indexOf("The serial number does not contain a vowel")}`).children[filledInCircle].style.fill === "rgb(0, 0, 0)"){
+                        filledInCircle = rnd.next(0, 12);
+                    }
+                }
+                document.getElementById(`diagram${i}`).children[filledInCircle].className = "highlightable filledIn";
                 document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
-                if(twoCircles === 2){
+                if(i > 5){
                     var filledInCircle2;
                     do{
                         filledInCircle2 = rnd.next(0, 12);
                     }while(filledInCircle2 === filledInCircle);
-                    document.getElementById(`diagram${i}`).children[filledInCircle2].className += "highlightable filledIn";
+                    document.getElementById(`diagram${i}`).children[filledInCircle2].className = "highlightable filledIn";
                     document.getElementById(`diagram${i}`).children[filledInCircle2].style = "fill:#000";
                 }
             }

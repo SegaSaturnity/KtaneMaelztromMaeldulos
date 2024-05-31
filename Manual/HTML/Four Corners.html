@@ -44,7 +44,20 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            var mainTable = document.getElementById("main").children[0];
+            var colorsRuleSeed1 = [
+                ["RB", "GG", "BB", "RR"],
+                ["BG", "RR", "GR", "BB"],
+                ["GG", "BB", "RB", "BG"],
+                ["GR", "BG", "RR", "GG"],
+                ["RR", "GR", "GG", "RB"],
+                ["BB", "RB", "BG", "GR"]
+            ];
+            for(var i = 2; i < 8; i++){
+                for(var j = 1; j < 5; j++){
+                    mainTable.children[i].children[j].innerHTML = "<b>"+colorsRuleSeed1[i - 2][j - 1]+"</b>";
+                }
+            }
         }
         function setRules(rnd){
             var mainTable = document.getElementById("main").children[0];

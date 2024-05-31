@@ -42,8 +42,12 @@ public class FourCorners : MonoBehaviour {
 		moduleId = moduleCount++;
 		
 		var RND = rs.GetRNG();
-		for(int i = 0; i < 24; i++){
-		    table[i] = RND.Next(0,3).ToString()+RND.Next(0,3).ToString();
+		if(RND.Seed == 1){
+		    table = new string[]{"01", "22", "11", "00", "12", "00", "20", "11", "22", "11", "01", "12", "20", "12", "00", "22", "00", "20", "22", "01", "11", "01", "12", "20"};
+		}else{
+		    for(int i = 0; i < 24; i++){
+		        table[i] = RND.Next(0,3).ToString()+RND.Next(0,3).ToString();
+		    }
 		}
 		
 		colorblindModeEnabled = colorblind.ColorblindModeActive;

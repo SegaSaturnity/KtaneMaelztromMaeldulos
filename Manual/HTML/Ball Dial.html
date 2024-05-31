@@ -43,7 +43,19 @@
     </style>
     <script>
         function setDefaultRules(rnd){
-            setRules(rnd);
+            var mainTable = document.getElementById("mainTable").children[0];
+            var dirsRuleSeed1 = [
+                ["DOWN", "UP", "DOWN", "LEFT"],
+                ["LEFT", "UP", "RIGHT", "UP"],
+                ["RIGHT", "LEFT", "UP", "DOWN"],
+                ["LEFT", "RIGHT", "DOWN", "LEFT"],
+                ["UP", "RIGHT", "LEFT", "DOWN"]
+            ];
+            for(var i = 2; i < 7; i++){
+                for(var j = 1; j < 5; j++){
+                    mainTable.children[i].children[j].innerHTML = "<b>"+dirsRuleSeed1[i - 2][j - 1]+"</b>";
+                }
+            }
         }
         function setRules(rnd){
             var mainTable = document.getElementById("mainTable").children[0];
