@@ -66,13 +66,14 @@
             ];
             rnd.shuffleFisherYates(words);
             var firstTable = document.getElementById("firstTable").children[0];
+            var secondTable = document.getElementById("secondTable").children[0];
             for(var i = 0; i < 7; i++){
                 firstTable.children[i+2].children[0].innerText = words[i];
+                secondTable.children[1].children[i].innerText = words[i];
                 firstTable.children[i+2].children[1].innerText = words[indices[i][0]]+" or "+words[indices[i][1]];
                 firstTable.children[i+2].children[2].innerText = words[indices[i][2]]+" or "+words[indices[i][3]];
                 firstTable.children[i+2].children[3].innerText = words[indices[i][4]]+" or "+words[indices[i][5]];
             }
-            var secondTable = document.getElementById("secondTable").children[0];
             for(var i = 2; i < 5; i++){
                 for(var j = 1; j < 8; j++){
                     secondTable.children[i].children[j].innerHTML = "<b>"+rnd.next(0, 10)+"</b>";

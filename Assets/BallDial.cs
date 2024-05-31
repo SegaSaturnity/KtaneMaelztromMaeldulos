@@ -335,27 +335,56 @@ public class BallDial : MonoBehaviour {
 		return bombInfo.GetSerialNumberNumbers().Any(x => x == display);
 	}
 	
-	string TwitchHelpMessage = "!{0} up/down/left/right to move a direction, and !{0} submit to submit. Note that the inputted direction is NOT relative to a given arrow.";
+	string TwitchHelpMessage = "!{0} up/down/left/right # to move a direction (optional # to specify number of times from 1 to 9), and !{0} submit to submit. Note that the inputted direction is NOT relative to a given arrow.";
 	string TwitchManualCode = "https://ktane.timwi.de/HTML/Ball%20Dial.html";
 	
 	IEnumerator ProcessTwitchCommand(string command){
 	    yield return null;
-	    if(command.Contains(" ")){
+	    string[]commandParts=command.ToLowerInvariant().Split(' ');
+	    if(commandParts.Length > 2 || (commandParts.Length > 1 && commandParts[0] == "submit")){
 	        yield return "sendtochaterror {0}, too many parameters.";
 	        yield break;
 	    }
-	    switch(command.ToLowerInvariant()){
+	    int numberOfTimes;
+	    if(commandParts.Length == 2){
+	        if(int.TryParse(commandParts[1], out numberOfTimes)){
+	            if(numberOfTimes < 1 || numberOfTimes > 9){
+	                yield return "sendtochaterror {0}, the number must be from 1 to 9.";
+	                yield break;
+	            }
+	        }
+	        else{
+                yield return "sendtochaterror {0}, the second parameter is not a number.";
+                yield break;
+	        }
+	    }
+	    else{
+	        numberOfTimes = 1;
+	    }
+	    switch(commandParts[0]){
 	        case "up":
-	            moveDir(0);
+	            for(int i = 0; i < numberOfTimes; i++){
+	                moveDir(0);
+	                yield return new WaitWhile(() => moving);
+	            }
 	            break;
 	        case "down":
-	            moveDir(2);
+	            for(int i = 0; i < numberOfTimes; i++){
+	                moveDir(2);
+	                yield return new WaitWhile(() => moving);
+	            }
 	            break;
 	        case "left":
-	            moveDir(3);
+	            for(int i = 0; i < numberOfTimes; i++){
+	                moveDir(3);
+	                yield return new WaitWhile(() => moving);
+	            }
 	            break;
 	        case "right":
-	            moveDir(1);
+	            for(int i = 0; i < numberOfTimes; i++){
+	                moveDir(1);
+	                yield return new WaitWhile(() => moving);
+	            }
 	            break;
 	        case "submit":
 	            submit();
@@ -376,7 +405,7 @@ public class BallDial : MonoBehaviour {
 	            submit();
 	            yield break;
 	        }
-	        moveDir(target);
+	        moveDir(mod(target + clock, 4));
 	    }while(!isSolved);
 	}
 }
