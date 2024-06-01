@@ -91,7 +91,7 @@ public class SomeButtons : MonoBehaviour {
 	void Start () {
 		var RND = rs.GetRNG();
 		if(RND.Seed == 1){
-		    ruleTemplates = new string[]{"the serial number contains a vowel","the bomb has a lit FRK indicator","the serial number does not contain a vowel","the bomb has at least 1 AA battery","the bomb has at most 1 D battery","the bomb has a PS/2 port","there are at least 4 red buttons","the quantity of blue and green buttons is the same","the quantity of black buttons is odd","there are no buttons of a unique color","there are 5 different colors of buttons","there are at most 0 white buttons",
+		    ruleTemplates = new string[]{"the serial number contains a vowel","the bomb has a lit FRK indicator","the serial number does not contain a vowel","the bomb has at least 1 AA battery","the bomb has at most 1 D battery","the bomb has a PS/2 port","there are at least 4 red buttons","the quantity of blue and green buttons is the same","the quantity of black buttons is odd","there are no buttons of a unique color","there are 5 different colors of buttons","there is at most 1 white button",
 		    "the quantity of red and white buttons is different","the quantity of blue buttons is even"};//placeholder rules required for functionality, not actually used in rule seed 1
             buttonsToBePressed.Add(0, new List<int>{2});
             buttonsToBePressed.Add(1, new List<int>{11});
@@ -155,7 +155,7 @@ public class SomeButtons : MonoBehaviour {
 		            }
 		        }
 		        if(ruleTemplates[i].Contains("!")){
-		            repl = RND.Next(0, 5);
+		            repl = RND.Next(1, 5);
 		            generatedNumbers[i,0]=repl;
 		            ruleTemplates[i] = ruleTemplates[i].Replace("!", repl.ToString());
 		            if(repl == 1){
@@ -238,8 +238,8 @@ public class SomeButtons : MonoBehaviour {
 		    hasGivenIndicator = bombInfo.IsIndicatorOn(((Indicator)generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("indicator")), 1]).ToString());
 		bool hasAtLeastNumberBatteries = bombInfo.GetBatteryCount(generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at least ")), 1]) >= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at least ")), 0];
 		bool hasAtMostNumberBatteries = bombInfo.GetBatteryCount(generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at most ")), 1]) <= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("the bomb has at most ")), 0];
-		bool hasAtLeastNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ")), 1]) >= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ")), 0];
-		bool hasAtMostNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ")), 1]) <= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ")), 0];
+		bool hasAtLeastNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ") || x.Contains("there is at least ")), 1]) >= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at least ") || x.Contains("there is at least ")), 0];
+		bool hasAtMostNumberColorButtons = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ") || x.Contains("there is at most ")), 1]) <= generatedNumbers[ruleTemplates.IndexOf(x => x.Contains("there are at most ") || x.Contains("there is at most ")), 0];
 		bool quantityColoredSame = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is the same")), 0]) == buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is the same")), 1]);
 		bool quantityColoredDifferent = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is different")), 0]) != buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is different")), 1]);
 		bool quantityOdd = buttonSequence.Count(j => j == generatedNumbers[ruleTemplates.IndexOf(x => x.Contains(" is odd")), 0]) % 2 == 1;

@@ -11,6 +11,7 @@
     <script src="js/jquery.3.7.0.min.js"></script>
     <script src="js/ruleseed.js"></script>
     <style>
+        svg circle { stroke: #000; }
         .dark svg circle { stroke: #DDD; }
         svg circle.filledIn { fill: #000; }
         .dark svg circle.filledIn { fill: #DDD; }
@@ -31,10 +32,10 @@
             for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
                 for(var j = 0; j < 12; j++){
                     document.getElementById(`diagram${i}`).children[j].className = "highlightable";
-                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent"; //using .fill doesn't work
+                    document.getElementById(`diagram${i}`).children[j].style = "margin-bottom:0;fill:transparent"; //using .fill doesn't work
                 }
             }
-            var rulesRuleSeed1 = ["The serial number contains a vowel","The bomb has a\nlit FRK indicator","The serial number does\nnot contain a vowel","The bomb has at\nleast 1 AA battery","The bomb has at\nmost 1 D battery","The bomb has a\nPS/2 port","There are at\nleast 4 red buttons","The quantity of blue and green buttons is the same","The quantity of\nblack buttons is odd","There are no buttons\nof a unique color","There are 5 different colors of buttons","There are at most 0\nwhite buttons"];
+            var rulesRuleSeed1 = ["The serial number contains a vowel","The bomb has a\nlit FRK indicator","The serial number does\nnot contain a vowel","The bomb has at\nleast 1 AA battery","The bomb has at\nmost 1 D battery","The bomb has a\nPS/2 port","There are at\nleast 4 red buttons","The quantity of blue and green buttons is the same","The quantity of\nblack buttons is odd","There are no buttons\nof a unique color","There are 5 different colors of buttons","There is at most 1\nwhite button"];
             var filledInRuleSeed1 = [
                 [2],
                 [11],
@@ -53,7 +54,7 @@
                 document.getElementById(`rule${i}`).innerText = rulesRuleSeed1[i];
                 for(var fill of filledInRuleSeed1[i]){
                     document.getElementById(`diagram${i}`).children[fill].className = "highlightable filledIn";
-                    document.getElementById(`diagram${i}`).children[fill].style = "fill:#000";
+                    document.getElementById(`diagram${i}`).children[fill].style = "margin-bottom:0;fill:#000";
                 }
             }
         }
@@ -87,7 +88,7 @@
             for(var i = 0; i < 12; i++){ // so that the buttons don't remain highlighted when changing to a different ruleseed
                 for(var j = 0; j < 12; j++){
                     document.getElementById(`diagram${i}`).children[j].className = "highlightable";
-                    document.getElementById(`diagram${i}`).children[j].style = "fill:transparent"; //using .fill doesn't work
+                    document.getElementById(`diagram${i}`).children[j].style = "margin-bottom:0;fill:transparent"; //using .fill doesn't work
                 }
             }
             for(var i = 0; i < 12; i++){
@@ -99,7 +100,7 @@
                         }
                     }
                 if(ruleTemplates[i].includes("!")){
-                        var number = rnd.next(0, 5);
+                        var number = rnd.next(1, 5);
                         ruleTemplates[i] = ruleTemplates[i].replace("!", number);
                         if(number === 1){
                             ruleTemplates[i] = ruleTemplates[i].replace("There are", "There is");
@@ -142,14 +143,14 @@
                     }
                 }
                 document.getElementById(`diagram${i}`).children[filledInCircle].className = "highlightable filledIn";
-                document.getElementById(`diagram${i}`).children[filledInCircle].style = "fill:#000";
+                document.getElementById(`diagram${i}`).children[filledInCircle].style = "margin-bottom:0;fill:#000";
                 if(i > 5){
                     var filledInCircle2;
                     do{
                         filledInCircle2 = rnd.next(0, 12);
                     }while(filledInCircle2 === filledInCircle);
                     document.getElementById(`diagram${i}`).children[filledInCircle2].className = "highlightable filledIn";
-                    document.getElementById(`diagram${i}`).children[filledInCircle2].style = "fill:#000";
+                    document.getElementById(`diagram${i}`).children[filledInCircle2].style = "margin-bottom:0;fill:#000";
                 }
             }
         }
