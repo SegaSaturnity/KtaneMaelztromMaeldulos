@@ -143,7 +143,7 @@ public class SomeButtons : MonoBehaviour {
 		    RND.ShuffleFisherYates(ruleTemplatesEdgework);
 		    RND.ShuffleFisherYates(ruleTemplatesButtons);
 		    ruleTemplates = ruleTemplatesEdgework.Concat(ruleTemplatesButtons).ToArray();
-		    for(int i = 0; i < 12; i++){
+		    for(int i = 0; i < 14; i++){
 		        int repl = -1;
 		        int repl2 = -1;
 		        if(ruleTemplates[i].Contains("_")){
@@ -155,7 +155,7 @@ public class SomeButtons : MonoBehaviour {
 		            }
 		        }
 		        if(ruleTemplates[i].Contains("!")){
-		            repl = RND.Next(0, 13);
+		            repl = RND.Next(0, 5);
 		            generatedNumbers[i,0]=repl;
 		            ruleTemplates[i] = ruleTemplates[i].Replace("!", repl.ToString());
 		            if(repl == 1){

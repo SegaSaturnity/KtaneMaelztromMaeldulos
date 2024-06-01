@@ -99,7 +99,7 @@
                         }
                     }
                 if(ruleTemplates[i].includes("!")){
-                        var number = rnd.next(0, 13);
+                        var number = rnd.next(0, 5);
                         ruleTemplates[i] = ruleTemplates[i].replace("!", number);
                         if(number === 1){
                             ruleTemplates[i] = ruleTemplates[i].replace("There are", "There is");
@@ -170,7 +170,7 @@
                     <li>You must push each of the correct buttons.</li>
                     <li>Use the key below, pressing the buttons colored black, press all that apply.</li>
                     <li>Each button only needs to be pressed once, though there is no penalty for pressing an applicable button more than once.</li>
-                    <li>If checking for amount of AA batteries, check only the ones that come in sets of 2.</li>
+                    <li>If checking for amount of AA batteries, check only the ones that come in sets of 2. 0 of a certain button color counts as an even amount.</li>
                 </ul><br>
                 <div>
                     <div class="main"><span id="rule0"></span><br>
