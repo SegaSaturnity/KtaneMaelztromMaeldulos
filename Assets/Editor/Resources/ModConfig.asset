@@ -31,7 +31,9 @@ MonoBehaviour:
 
     moduleID: q&a
 
-    moduleID: breakers'
-  version: 1.22
+    moduleID: breakers
+
+    moduleID: scattershot'
+  version: 1.3
   outputFolder: build
   previewImage: {fileID: 2800000, guid: cae27366f62862c4e980df2fc57cfec5, type: 3}
