@@ -27,6 +27,7 @@ public class _breakersScript:ModdedModule{
     private bool allBreakersToRight=false;
     private bool[,,]startingPositions=new bool[4,5,4];
     private char[,,]furtherAdjustments=new char[3,4,4];
+    internal bool hasStruck = false;
 
     void Start(){
         var RND = rs.GetRNG();
@@ -97,7 +98,7 @@ public class _breakersScript:ModdedModule{
         Shake(breaker,.5f,Sound.BigButtonPress);
         if(allBreakersToRight)
             yield break;
-        bool hasStruck=false;
+        hasStruck=false;
         if((!isColorful&&!currentBlackPositions[index])||(isColorful&&!currentColorfulPositions[index])){
             for(int i=0;i<10;i++){
                 breaker.GetComponent<Transform>().Rotate(0f,0f,-9f);

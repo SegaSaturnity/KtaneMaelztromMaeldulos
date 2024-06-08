@@ -214,7 +214,10 @@ public class Quadrecta : MonoBehaviour {
         }
         switch(commandParts[0]){
             case "hold":
-                if(selected.Select(x => x.ToUpperInvariant()).Contains(commandParts[1].ToUpperInvariant())){
+                if(heldButton != null){
+                    yield return "sendtochaterror {0}, a button is already being held.";
+                }
+                else if(selected.Select(x => x.ToUpperInvariant()).Contains(commandParts[1].ToUpperInvariant())){
                     heldButton = buttons[selected.Select(x => x.ToUpperInvariant()).IndexOf(x => x == commandParts[1].ToUpperInvariant())];
                     yield return heldButton;
                 }else{

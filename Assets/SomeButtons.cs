@@ -319,8 +319,13 @@ public class SomeButtons : MonoBehaviour {
 	            yield break;
 	        }
 	    }
-	    foreach(string part in commandParts)
+        int strikes = bombInfo.GetStrikes();
+	    foreach(string part in commandParts){
 	        pressPos(int.Parse(part)-1);
+            if(strikes != bombInfo.GetStrikes())
+                break;
+            strikes = bombInfo.GetStrikes();
+        }
 	}
 	
 	void TwitchHandleForcedSolve(){
