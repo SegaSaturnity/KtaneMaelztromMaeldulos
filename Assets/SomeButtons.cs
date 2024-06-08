@@ -23,6 +23,8 @@ public class SomeButtons : MonoBehaviour {
 	private static int moduleCount;
 	private bool colorblindModeEnabled;
     private int moduleId;
+    private string isAreAtLeast = "are";
+    private string isAreAtMost = "are";
     private string[] colors = new string[]{"red", "blue", "green", "white", "black"};
     private string[]ruleTemplates = new string[12];
     private int[,]generatedNumbers = new int[,]{
@@ -89,6 +91,7 @@ public class SomeButtons : MonoBehaviour {
     }
 
 	void Start () {
+        isAreAtMost = "is";
 		var RND = rs.GetRNG();
 		if(RND.Seed == 1){
 		    ruleTemplates = new string[]{"the serial number contains a vowel","the bomb has a lit FRK indicator","the serial number does not contain a vowel","the bomb has at least 1 AA battery","the bomb has at most 1 D battery","the bomb has a PS/2 port","there are at least 4 red buttons","the quantity of blue and green buttons is the same","the quantity of black buttons is odd","there are no buttons of a unique color","there are 5 different colors of buttons","there is at most 1 white button",
@@ -159,9 +162,16 @@ public class SomeButtons : MonoBehaviour {
 		            generatedNumbers[i,0]=repl;
 		            ruleTemplates[i] = ruleTemplates[i].Replace("!", repl.ToString());
 		            if(repl == 1){
+                        if(ruleTemplates[i].Contains("at least"))
+                            isAreAtLeast = "is";
+                        if(ruleTemplates[i].Contains("at most"))
+                            isAreAtMost = "is";
                         ruleTemplates[i] = ruleTemplates[i].Replace("there are", "there is");
                         ruleTemplates[i] = ruleTemplates[i].Replace("buttons", "button");
 		            }
+                    else{
+                        
+                    }
 		        }
                 if(ruleTemplates[i].Contains("PORTS")){
                     repl = RND.Next(0, 6);
@@ -255,8 +265,8 @@ public class SomeButtons : MonoBehaviour {
                                                      "indicator",
                                                      "the bomb has at least ",
                                                      "the bomb has at most ",
-                                                     "there are at least ",
-                                                     "there are at most ",
+                                                     "there "+isAreAtLeast+" at least ",
+                                                     "there "+isAreAtMost+" at most ",
                                                      " is the same",
                                                      " is different",
                                                      " is odd",

@@ -16,7 +16,7 @@ public class QnA : MonoBehaviour {
     private int moduleId;
 	
 	private string[] questions = new string[] {"WHAT", "WHEN", "WHERE", "WHO", "HOW", "WHY"};
-	private string[] answers = new string[] {"THAT", "THEN", "THERE", "THEM", "THEY", "THIS", "THESE", "THOSE"};
+	private string[] answers = new string[] {"THAT", "THEN", "THEM", "THERE", "THEY", "THIS", "THESE", "THOSE"};
     private int[] table = new int[48];
 	
 	private string[] c_questions;
@@ -30,7 +30,14 @@ public class QnA : MonoBehaviour {
 		moduleId = moduleCount++;
 	    var RND = rs.GetRNG();
         if(RND.Seed == 1){
-            table = new int[]{6, 4, 2, 3, 1, 7, 5, 6, 3, 0, 4, 2, 4, 1, 7, 2, 0, 5, 1, 0, 5, 7, 3, 6, 7, 5, 0, 1, 6, 3, 3, 2, 4, 6, 7, 1, 2, 7, 1, 4, 5, 0, 0, 3, 6, 5, 2, 4};
+            table = new int[]{6, 4, 2, 3, 1, 7,
+                              5, 6, 3, 0, 4, 2,
+                              4, 1, 7, 2, 0, 5,
+                              1, 0, 5, 7, 3, 6,
+                              7, 5, 0, 1, 6, 3,
+                              3, 2, 4, 6, 7, 1,
+                              2, 7, 1, 4, 5, 0,
+                              0, 3, 6, 5, 2, 4};
         }else{
             int[] numbers = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
             for(int i = 0; i < 6; i++){
