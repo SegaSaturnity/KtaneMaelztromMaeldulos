@@ -2,7 +2,8 @@
   "Compatibility": "Compatible",
   "Contributors": {
     "Developer": [ "Dragoon" ],
-    "Manual": [ "Maelztrom" ]
+    "Manual": [ "Maelztrom" ],
+    "Twitch Plays": [ "ObjectsCountries" ]
   },
   "DefuserDifficulty": "Medium",
   "Description": "Keep pressing buttons until you find and press the Key Button, while avoiding pressing incorrect buttons. Tags: 36-buttons, blue, white, red, triangle, square, circle, lights",
@@ -14,6 +15,10 @@
   "RuleSeedSupport": "Supported",
   "SortKey": "SCATTERSHOT",
   "SourceUrl": "https://github.com/SegaSaturnity/KtaneMaelztromMaeldulos/",
+  "Souvenir": {
+    "Explanation": "Souvenir could ask about what the key button was like.",
+    "Status": "Considered"
+  },
   "SteamID": "3251848295",
   "Symbol": "Sct",
   "Type": "Regular"

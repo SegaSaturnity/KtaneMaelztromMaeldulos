@@ -322,5 +322,26 @@ public class Scattershot : MonoBehaviour {
 		return null;
 	}
 
+    string TwitchHelpMessage = "!{0}, then a letter and number (no space in between) to press the button at that position. Letter represents column, number represents row. For example, !{0} A6 to press the bottom-right button.";
+    string TwitchManualCode = "https://ktane.timwi.de/HTML/Scattershot.html";
+
+    IEnumerator ProcessTwitchCommand(string command){
+        yield return null;
+        if(command.Length < 2)
+            yield return "sendtochaterror {0}, too few parameters.";
+        else if(command.Length > 2)
+            yield return "sendtochaterror {0}, too many parameters.";
+        else if(!"ABCDEF".Contains(command[0]) || !"123456".Contains(command[1]))
+            yield return "sendtochaterror {0}, invalid coordinate.";
+        else
+            Select("123456".IndexOf(command[1]) * 6 + "ABCDEF".IndexOf(command[0]));
+    }
+
+    void TwitchHandleForcedSolve(){
+        if(isSolved)
+            return;
+        Select(System.Array.IndexOf(buttons_ar, key));
+    }
+
 }
 
