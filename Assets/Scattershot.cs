@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using UnityEngine;
 using KModkit;
@@ -29,7 +28,6 @@ public class Scattershot : MonoBehaviour {
 	private string key;
 	private string ans = "0000";
 	private int start = 0;
-	private bool firstPress = true;
 	
 	private string[] column = new string[]{"11", "13", "03", "31", "32"};
 	private string[] row = new string[]{" 12", " 01", " 02", " 22", " 21"};
@@ -187,8 +185,6 @@ public class Scattershot : MonoBehaviour {
 		Debug.LogFormat("[Scattershot #{0}] Lit up: all {1} and all {2}, key shown: {3}.", moduleId, TranslateID(to_blink[0]), TranslateID(to_blink[1]), TranslateID(tcheck));
 		foreach ( KMSelectable button in b_buttons ) {
 			int j = i;
-			int a = 0;
-			
 			//check for blink
 			foreach (string seq in to_blink) {
 				if (buttons_ar[j][int.Parse(seq[0].ToString())].ToString() == seq[1].ToString()) {
