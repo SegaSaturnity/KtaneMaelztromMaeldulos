@@ -120,7 +120,7 @@ public class SomeButtons : MonoBehaviour {
                 {4, -1},
                 {-1, -1},
                 {-1, -1},
-                {0, 3},
+                {1, 3},
                 {0, 3},
                 {1, -1}
             };
