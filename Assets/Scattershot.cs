@@ -322,10 +322,11 @@ public class Scattershot : MonoBehaviour {
 		return null;
 	}
 
-    string TwitchHelpMessage = "!{0}, then a letter and number (no space in between) to press the button at that position. Letter represents column, number represents row. For example, !{0} A6 to press the bottom-right button.";
+    string TwitchHelpMessage = "!{0}, then a letter and number (no space in between) to press the button at that position. Letter represents column, number represents row. For example, !{0} A6 to press the bottom-left button.";
     string TwitchManualCode = "https://ktane.timwi.de/HTML/Scattershot.html";
 
     IEnumerator ProcessTwitchCommand(string command){
+        command = command.ToUpperInvariant();
         yield return null;
         if(command.Length < 2)
             yield return "sendtochaterror {0}, too few parameters.";
