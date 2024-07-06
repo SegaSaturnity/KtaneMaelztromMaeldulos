@@ -110,7 +110,7 @@ public class SomeButtons : MonoBehaviour {
             buttonsToBePressed.Add(11, new List<int>{5, 7});
             generatedNumbers = new int[,]{
                 {-1, -1},
-                {1, 11},
+                {1, 10},
                 {1, -1},
                 {1, 2},
                 {1, 1},

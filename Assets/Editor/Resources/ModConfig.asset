@@ -14,26 +14,27 @@ MonoBehaviour:
   id: MaelztromMaeldulos
   title: Maelztrom Maeldulos
   author: Dragoon
-  description: "[h2]Maelztrom Maeldulos[/h2]\nA collection of modules based on manuals
-    by Maelztrom\n\nEach is designed to be vanilla friendly, beginner friendly, and
-    relatively straightforward.\n\n[table noborder=1]\n\t[tr][td][h3]BallDial[/h3]moduleID:
-    ballDial[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Ball%20Dial.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Ball%20Dial.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Ball%20Dial.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Breakers[/h3]moduleID:
-    breakers[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Breakers.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Breakers.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Breakers.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Curly
-    Wires[/h3]moduleID: curlyWires[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Curly%20Wires.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Curly%20Wires.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Curly%20Wires.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Four
-    Corners[/h3]moduleID: fourCorners[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Four%20Corners.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Four%20Corners.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Four%20Corners.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Q
-    & A[/h3]moduleID: q&a[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Q%20%26%20A.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Q%20%26%20A.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Q%20%26%20A.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Quadrecta[/h3]moduleID:
-    quadrecta[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Quadrecta.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Quadrecta.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Quadrecta.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Scattershot[/h3]moduleID:
-    scattershot[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Scattershot.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Scattershot.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Scattershot.pdf]Manual PDF[/url][/td][/tr]\n\t[tr][td][h3]Some
-    Buttons[/h3]moduleID: someButtons[/td]\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Some%20Buttons.png[/img][/td]\n\t\t[td][url=https://ktane.timwi.de/HTML/Some%20Buttons.html]Manual
-    HTML[/url]\n\t\t[url=https://ktane.timwi.de/PDF/Some%20Buttons.pdf]Manual PDF[/url][/td][/tr]\n[/table]\n\nIdeas
-    and manuals were made by Maelztrom, coded and built by Dragoon and ObjectsCountries."
-  version: 1.38
+  description: "[h2]Maelztrom Maeldulos[/h2]\\nA collection of modules based on manuals\r\n
+    \   by Maelztrom\\n\\nEach is designed to be vanilla friendly, beginner friendly,
+    and\r\n    relatively straightforward.\\n\\n[table noborder=1]\\n\\t[tr][td][h3]BallDial[/h3]moduleID:\r\n
+    \   ballDial[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Ball%20Dial.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Ball%20Dial.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Ball%20Dial.pdf]Manual
+    PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Breakers[/h3]moduleID:\r\n    breakers[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Breakers.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Breakers.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Breakers.pdf]Manual PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Curly\r\n
+    \   Wires[/h3]moduleID: curlyWires[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Curly%20Wires.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Curly%20Wires.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Curly%20Wires.pdf]Manual
+    PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Four\r\n    Corners[/h3]moduleID: fourCorners[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Four%20Corners.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Four%20Corners.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Four%20Corners.pdf]Manual
+    PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Q\r\n    & A[/h3]moduleID: q&a[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Q%20%26%20A.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Q%20%26%20A.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Q%20%26%20A.pdf]Manual
+    PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Quadrecta[/h3]moduleID:\r\n    quadrecta[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Quadrecta.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Quadrecta.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Quadrecta.pdf]Manual PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Scattershot[/h3]moduleID:\r\n
+    \   scattershot[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Scattershot.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Scattershot.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Scattershot.pdf]Manual
+    PDF[/url][/td][/tr]\\n\\t[tr][td][h3]Some\r\n    Buttons[/h3]moduleID: someButtons[/td]\\n\\t\\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Some%20Buttons.png[/img][/td]\\n\\t\\t[td][url=https://ktane.timwi.de/HTML/Some%20Buttons.html]Manual\r\n
+    \   HTML[/url]\\n\\t\\t[url=https://ktane.timwi.de/PDF/Some%20Buttons.pdf]Manual
+    PDF[/url][/td][/tr]\\n[/table]\\n\\nIdeas\r\n    and manuals were made by Maelztrom,
+    coded and built by Dragoon and ObjectsCountries."
+  version: 1.39
   outputFolder: build
   previewImage: {fileID: 2800000, guid: cae27366f62862c4e980df2fc57cfec5, type: 3}
