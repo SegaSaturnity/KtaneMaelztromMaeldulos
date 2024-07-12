@@ -157,6 +157,7 @@ public class Scattershot : MonoBehaviour {
 		int i = 0;
 		if (buttons_ar[pos] == key) {
 			Debug.LogFormat("[Scattershot #{0}] Pressed the right button, horray! Solved!", moduleId);
+			audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
 			module.HandlePass();
 			isSolved = true;
 			return;
