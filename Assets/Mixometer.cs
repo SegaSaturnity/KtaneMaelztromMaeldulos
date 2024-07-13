@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Mixometer : MonoBehaviour {
@@ -91,8 +92,8 @@ public class Mixometer : MonoBehaviour {
 				continue;
 			}
 			Debug.LogFormat("[Mixometer #{0}] Button {1} rotates {2} dials. Arrow is pointing {3}.", moduleId, j, i_buttons[j-1].Length.ToString(), dirs[dir]);
-			
-			for (int x = 0; x < UnityEngine.Random.Range(0, 7); x++) {
+			int temp = UnityEngine.Random.Range(0, 7); // putting this directly in the for loop makes it generate a number each time the for loop is run
+			for (int x = 0; x < temp; x++) {
 				rotateDials(i_buttons[j-1]);
 			}
 		}
@@ -164,5 +165,71 @@ public class Mixometer : MonoBehaviour {
 			arr[t] = arr[r];
 			arr[r] = tmp;
 		}
+	}
+    
+	string TwitchHelpMessage = "!{0}, then a sequence of numbers 1-5 (such as !{0} 124225) to press the corresponding buttons.";
+	string TwitchManualCode = "https://ktane.timwi.de/HTML/Mixometer.html";
+    
+	IEnumerator ProcessTwitchCommand(string command){
+        yield return null;
+	    if(command.Contains(' ')){
+	        yield return "sendtochaterror {0}, too many parameters.";
+	        yield break;
+	    }
+        if(!command.All(c => c >= '1' && c <= '5')){
+            yield return "sendtochaterror {0}, your command must consist solely of numbers 1 to 5.";
+            yield break;
+        }
+	    foreach(char c in command){
+	        switch(c){
+	            case '1':
+	                pressRotate(0);
+	                yield return new WaitForSeconds(.15f);
+	                break;
+	            case '2':
+	                pressRotate(1);
+	                yield return new WaitForSeconds(.15f);
+	                break;
+	            case '3':
+	                pressRotate(2);
+	                yield return new WaitForSeconds(.15f);
+	                break;
+	            case '4':
+	                pressRotate(3);
+	                yield return new WaitForSeconds(.15f);
+	                break;
+	            case '5':
+	                pressRotate(4);
+	                yield return new WaitForSeconds(.15f);
+	                break;
+	            default:
+                    yield return "sendtochaterror {0}, your command must consist solely of numbers 1 to 5.";
+                    yield break;
+	        }
+	    }
+	}
+	
+	IEnumerator TwitchHandleForcedSolve(){
+        yield return null;
+        if(isSolved)
+            yield break;
+        int[]occurrences = new int[4]{0,0,0,0};
+        foreach(int[] button in i_buttons){
+            foreach(int dial in button){
+                occurrences[dial]++;
+            }
+        }
+        for(int i = 4; i >= 1; i--){
+            int button = i_buttons.IndexOf(x => x.Length == i);
+            while(sub[occurrences.IndexOf(x => x == 5 - i)] != ans[occurrences.IndexOf(x => x == 5 - i)]){
+                pressRotate(button);
+                yield return new WaitForSeconds(.15f);
+            }
+        }
+        if(fakeStrike){
+            pressRotate(i_buttons.IndexOf(x => x.Length == 0));
+            yield return new WaitForSeconds(.15f);
+	    }
+        pressRotate(i_buttons.IndexOf(x => x.Length == 0));
 	}
 }

@@ -99,8 +99,8 @@ public class Delumination : MonoBehaviour {
 					l.transform.Find("Light Text").GetComponent<MeshRenderer>().material.mainTexture = lightColoursTextOff[black_l];
 					loop++;
 					if (loop > 99) {
-						break;
 						black_l = 4;
+						break;
 					}
 				}
 				cb_text = color_names[black_l][0].ToString();
@@ -301,4 +301,64 @@ public class Delumination : MonoBehaviour {
 
 		return false;
 	}
+	
+    string TwitchHelpMessage = "!{0}, then a sequence of numbers 1-4 (such as !{0} 12343241) to flip the corresponding switches (command treats order as left to right).";
+	string TwitchManualCode = "https://ktane.timwi.de/HTML/Delumination.html";
+	
+	IEnumerator ProcessTwitchCommand(string command){
+	    yield return null;
+	    if(command.Contains(' ')){
+	        yield return "sendtochaterror {0}, too many parameters.";
+	        yield break;
+	    }
+        if(!command.All(c => c >= '1' && c <= '4')){
+            yield return "sendtochaterror {0}, your command must consist solely of numbers 1 to 4.";
+            yield break;
+        }
+	    foreach(char c in command){
+	        switch(c){
+	            case '1':
+	                pressFlip(0);
+	                yield return new WaitWhile(() => flipping);
+	                break;
+	            case '2':
+	                pressFlip(1);
+	                yield return new WaitWhile(() => flipping);
+	                break;
+	            case '3':
+	                pressFlip(2);
+	                yield return new WaitWhile(() => flipping);
+	                break;
+	            case '4':
+	                pressFlip(3);
+	                yield return new WaitWhile(() => flipping);
+	                break;
+	            default:
+                    yield return "sendtochaterror {0}, your command must consist solely of numbers 1 to 4.";
+                    yield break;
+	        }
+	    }
+	}
+	
+	IEnumerator TwitchHandleForcedSolve(){
+        yield return null;
+        if(isSolved)
+            yield break;
+        if(!turn_off){
+            foreach(char c in answer_u){
+                if(dirs[s_int.Select(x => (char)(x + '0')).IndexOf(x => x == c)] == 1){
+                    pressFlip(s_int.Select(x => (char)(x + '0')).IndexOf(x => x == c));
+                    yield return new WaitWhile(() => flipping);
+                }
+            }
+        }
+        if(turn_off){
+            foreach(char c in answer_d){
+                if(dirs[l_int.Select(x => (char)(x + '0')).IndexOf(x => x == c)] == -1){
+                    pressFlip(l_int.Select(x => (char)(x + '0')).IndexOf(x => x == c));
+                    yield return new WaitWhile(() => flipping);
+                }
+            }
+        }
+    }
 }
