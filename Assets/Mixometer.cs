@@ -93,7 +93,7 @@ public class Mixometer : MonoBehaviour {
 			}
 			Debug.LogFormat("[Mixometer #{0}] Button {1} rotates {2} dials. Arrow is pointing {3}.", moduleId, j, i_buttons[j-1].Length.ToString(), dirs[dir]);
 			int temp = UnityEngine.Random.Range(0, 7); // putting this directly in the for loop makes it generate a number each time the for loop is run
-			for (int x = 0; x < temp; x++) {
+			for (int x = 0; x < temp; x++) {		   // I was aware, yes
 				rotateDials(i_buttons[j-1]);
 			}
 		}

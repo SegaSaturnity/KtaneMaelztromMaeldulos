@@ -43,32 +43,32 @@
                     mainTable.children[i].children[j].innerHTML = "<b>"+colors[(i-2)*4 + (j-1)]+"</b>";
                 }
             }
-			
-			var orderExtended= ["YELLOW", "BLACK",  "GREEN", "BLUE", "WHITE"];
-			
-			document.getElementsByClassName("color")[0].innerHTML = orderExtended[0];
-			for(var i = 1; i < 5; i++){
-				document.getElementsByClassName("color")[i].innerHTML = orderExtended[i-1];
-			}
+            
+            var orderExtended= ["YELLOW", "BLACK",  "GREEN", "BLUE", "WHITE"];
+            
+            document.getElementsByClassName("color")[0].innerHTML = orderExtended[0];
+            for(var i = 1; i < 5; i++){
+                document.getElementsByClassName("color")[i].innerHTML = orderExtended[i-1];
+            }
         }
         function setRules(rnd){
             var mainTable = document.getElementById("mainTable").children[0];
             var order = ["R", "B", "G", "W", "K", "Y"];
-			var names = ["RED", "BLUE", "GREEN", "WHITE", "BLACK", "YELLOW"];
-			var orderExtended = [5, 4, 2, 1, 3];
-			rnd.shuffleFisherYates(orderExtended);
-			
+            var names = ["RED", "BLUE", "GREEN", "WHITE", "BLACK", "YELLOW"];
+            var orderExtended = [5, 4, 2, 1, 3];
+            rnd.shuffleFisherYates(orderExtended);
+            
             for(var i = 2; i < 7; i++){
                 for(var j = 1; j < 5; j++){
-				   rnd.shuffleFisherYates(order);
+                   rnd.shuffleFisherYates(order);
                    mainTable.children[i].children[j].innerHTML = "<b>"+order.join(" ")+"</b>";
                 }
             }
-			
-			document.getElementsByClassName("color")[0].innerHTML = names[orderExtended[0]];
-			for(var i = 1; i < 5; i++){
-				document.getElementsByClassName("color")[i].innerHTML = names[orderExtended[i-1]];
-			}
+            
+            document.getElementsByClassName("color")[0].innerHTML = names[orderExtended[0]];
+            for(var i = 1; i < 5; i++){
+                document.getElementsByClassName("color")[i].innerHTML = names[orderExtended[i-1]];
+            }
         }
     </script>
 </head>

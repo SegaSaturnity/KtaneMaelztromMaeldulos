@@ -10,7 +10,6 @@
     <script src="js/ktane-utils.js"></script>
     <script src="js/jquery.3.7.0.min.js"></script>
     <script src="js/ruleseed.js"></script>
-    <!-- Remove the whole style tag if empty -->
     <style>
         /* Remove this if you do not have any tables */
         .dark table, table {
@@ -42,32 +41,31 @@
                 [7, 3, 5, 8, 0, 9, 6, 4],
                 [1, 0, 9, 6, 2, 5, 7, 8]
             ];
-			
-			
-			for(var j = 0; j < 15; j++){
-				mainTable.children[2].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][j%3]+"</b>";
-				mainTable.children[4].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][6 - (j%3)]+"</b>";
-				if (j%3 == 1) continue;
-				mainTable.children[3].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][7 - (2 * (j%3))]+"</b>";
-			}
-			
+            
+            for(var j = 0; j < 15; j++){
+                mainTable.children[2].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][j%3]+"</b>";
+                mainTable.children[4].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][6 - (j%3)]+"</b>";
+                if (j%3 == 1) continue;
+                mainTable.children[3].children[j].innerHTML = "<b>"+dialsRuleSeed1[(j/3) | 0][7 - (2 * (j%3))]+"</b>";
+            }
+            
         }
         function setRules(rnd){
             var mainTable = document.getElementById("main").children[0];
             var dialsTable = [[],[],[],[],[]];
-			
-			for(var x = 0; x < 5; x++){
-				for(var y = 0; y < 8; y++){
-					dialsTable[x].push(rnd.next(0,10));
-				}
-			}
-			
-			for(var j = 0; j < 15; j++){
-				mainTable.children[2].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][j%3]+"</b>";
-				mainTable.children[4].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][6 - (j%3)]+"</b>";
-				if (j%3 == 1) continue;
-				mainTable.children[3].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][7 - (2 * (j%3))]+"</b>";
-			}
+            
+            for(var x = 0; x < 5; x++){
+                for(var y = 0; y < 8; y++){
+                    dialsTable[x].push(rnd.next(0,10));
+                }
+            }
+            
+            for(var j = 0; j < 15; j++){
+                mainTable.children[2].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][j%3]+"</b>";
+                mainTable.children[4].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][6 - (j%3)]+"</b>";
+                if (j%3 == 1) continue;
+                mainTable.children[3].children[j].innerHTML = "<b>"+dialsTable[(j/3) | 0][7 - (2 * (j%3))]+"</b>";
+            }
         }
     </script>
 </head>
