@@ -34,6 +34,6 @@ MonoBehaviour:
     Buttons[/h3]moduleID: someButtons[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Some%20Buttons.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Some%20Buttons.html]Manual
     HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Some%20Buttons.pdf]Manual PDF[/url][/td][/tr]\r\n[/table]\r\n\r\nIdeas
     and manuals were made by Maelztrom, coded and built by Dragoon and ObjectsCountries."
-  version: 1.39
+  version: 1.4
   outputFolder: build
   previewImage: {fileID: 2800000, guid: cae27366f62862c4e980df2fc57cfec5, type: 3}
