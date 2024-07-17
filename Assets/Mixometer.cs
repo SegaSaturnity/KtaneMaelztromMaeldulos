@@ -86,7 +86,7 @@ public class Mixometer : MonoBehaviour {
 			}
 			
 			j++;
-			string[] dirs = {"North", "Northeast", "East", "Southeast", "South", "Southwest", "West", "Northwest"};
+			string[] dirs = {"Northwest", "North", "Northeast", "East", "Southeast", "South", "Southwest", "West"};
 			if (i_buttons[j-1].Length == 0) {
 				Debug.LogFormat("[Mixometer #{0}] Button {1} is the report button. Arrow is pointing {2}.", moduleId, j, dirs[dir]);
 				continue;
