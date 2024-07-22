@@ -2,18 +2,17 @@
 <rect    stroke="#000" stroke-width="3" x="5" y="5" width="337" height="337"/>
 <ellipse stroke="#000" stroke-width="3" cx="300" cy="40"  rx="16" ry="16"/>
 
-<rect stroke="#000" stroke-width="3" x="143" y="57" width="60" height="30"/>
+<rect stroke="#000" fill="#000" stroke-width="3" x="40" y="91" width="266" height="166"/>
 
-<rect stroke="#000" stroke-width="3" x="63" y="114" width="10" height="120"/>
-<rect stroke="#000" stroke-width="3" x="133" y="114" width="10" height="120"/>
-<rect stroke="#000" stroke-width="3" x="203" y="114" width="10" height="120"/>
-<rect stroke="#000" stroke-width="3" x="273" y="114" width="10" height="120"/>
-<path stroke="#000" stroke-width="3" d="M 73,124 H 133 M 143,124 H 203 M 213,124 H 273"/>
-<path stroke="#000" stroke-width="3" d="M 73,224 H 133 M 143,224 H 203 M 213,224 H 273"/>
+<rect stroke="#000" fill="#fff" stroke-width="3" x="68" y="124" width="210" height="100"/>
+<rect stroke="#000" fill="#fff" stroke-width="3" x="63" y="114" width="10" height="120"/>
+<rect stroke="#000" fill="#fff" stroke-width="3" x="133" y="114" width="10" height="120"/>
+<rect stroke="#000" fill="#fff" stroke-width="3" x="203" y="114" width="10" height="120"/>
+<rect stroke="#000" fill="#fff" stroke-width="3" x="273" y="114" width="10" height="120"/>
 
-<ellipse stroke="#000" fill="#000" stroke-width="3" cx="103" cy="274" rx="13" ry="13"/>
-<ellipse stroke="#000" fill="#000" stroke-width="3" cx="173" cy="274" rx="13" ry="13"/>
-<ellipse stroke="#000" fill="#000" stroke-width="3" cx="243" cy="274" rx="13" ry="13"/>
+<rect stroke="#000" fill="#000" stroke-width="3" x="90" y="275" width="26" height="26"/>
+<rect stroke="#000" fill="#000" stroke-width="3" x="160" y="275" width="26" height="26"/>
+<rect stroke="#000" fill="#000" stroke-width="3" x="230" y="275" width="26" height="26"/>
 
 <path stroke="#000" stroke-width="8" d="
 M 93,157 C 99,157 107,151 107,146 V 201
@@ -21,10 +20,12 @@ M 159,162 C 161,145 186,145 187,162 C 188,177 169,179 161,197 H 191
 M 229,159 C 240,132 273,167 238,172
 M 238,172 C 275,173 250,214 229,188"/>
 
-<path stroke="#000" stroke-width="1.5" d="
-M 157,68 C 153,62 145,70 153,72 C 164,74 153,84 149,76
-M 171,66 H 162 V 79 H 171 M 162,72 H 169
-M 175,79.8 V 65.2 M 184,79.4 L 175,65.6 M 184,65.2 V 79.8
-M 192,66 H 189 V 79 H 192 C 199,79 199,66 192,66"/>
+<rect stroke="#000" fill="#000" stroke-width="3" x="143" y="42" width="60" height="30"/>
+
+<path stroke="#fff" stroke-width="2" d="
+M 157,53 C 153,47 145,55 153,57 C 164,59 153,69 149,61
+M 171,51 H 162 V 64 H 171 M 162,57 H 169
+M 175,64.8 V 50.2 M 184,64.4 L 175,50.6 M 184,50.2 V 64.8
+M 192,51 H 189 V 64 H 192 C 199,64 199,51 192,51"/>
 
 </svg>

@@ -2,116 +2,158 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1">
-  <title>Imitation — Keep Talking and Nobody Explodes Module</title>
-  <link rel="stylesheet" type="text/css" href="css/font.css">
-  <link rel="stylesheet" type="text/css" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script src="js/ktane-utils.js"></script>
-  <script src="js/jquery.3.7.0.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1">
+	<link rel='icon' href='img/favicon.ico' type='image/png'>
+	<title>Imitation — Keep Talking and Nobody Explodes Module</title>
+	<link rel="stylesheet" type="text/css" href="css/font.css">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/ktane-utils.js"></script>
+	<script src="js/jquery.3.7.0.min.js"></script>
+	<script src="js/ruleseed.js"></script>
+	<script>
+		function setDefaultRules(rnd) {
+			var paritiesRuleseed1 = ["even", "odd", "even", "odd", "odd", "even"];
+			for (var i = 0; i < 6; i++) {
+				document.getElementsByClassName("parity")[i].innerText = paritiesRuleseed1[i];
+			}
+			var numbersRuleseed1 = [[3, 1, 2, 4, 2, 3, 5, 4, 1], [1, 5, 3, 2, 5, 1, 4, 2, 3], [5, 3, 4, 1, 4, 2, 1, 5, 2], [4, 2, 5, 3, 1, 5, 2, 3, 4]];
+			var numbersTable = document.getElementById("numbersTable").children[0];
+			for (var j = 2; j < 6; j++) {
+				for (var k = 1; k < 10; k++) {
+					numbersTable.children[j].children[k].innerHTML = "<b>" + numbersRuleseed1[j - 2][k - 1] + "</b>";
+				}
+			}
+		}
+		function setRules(rnd) {
+			var parities = document.getElementsByClassName("parity");
+			for (var i = 0; i < 6; i += 2) {
+				var parity = rnd.next(0, 2);
+				if (parity === 0) {
+					parities[i].innerText = "odd";
+					parities[i + 1].innerText = "even";
+				}
+				else {
+					parities[i].innerText = "even";
+					parities[i + 1].innerText = "odd";
+				}
+			}
+			var numbersTable = document.getElementById("numbersTable").children[0];
+			for (var j = 2; j < 6; j++) {
+				for (var k = 1; k < 10; k++) {
+					numbersTable.children[j].children[k].innerHTML = "<b>" + rnd.next(1, 6) + "</b>";
+				}
+			}
+		}
+	</script>
 </head>
 
 <body>
-  <div class="section">
-    <div class="page page-bg-02">
-      <div class="page-header">
-        <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
-        <span class="page-header-section-title">Imitation</span>
-      </div>
-      <div class="page-content">
-        <img src="img/Component/Imitation.svg" class="diagram">
-        <h2>On the Subject of Imitation</h2>
-        <p class="flavour-text">It’s like a riddle, wrapped in a mystery, inside an enigma…</p>
-        <ul>
-          <li>You must use the buttons to adjust each digit on the dial to the proper value before pressing SEND.</li>
-          <li>The buttons below the dial increase or decrease a digit on the dial by one. Their function resets upon a
-            strike.</li>
-          <li>Sum the three digits on the dial. If that number is two digits, sum the digits again.
-            Use this sum in the table below to determine the <b>Cipher Key</b>, along with the amount of buttons that
-            increase the display.</li>
-          <li>Use <b>only</b> the original display value of each digit to determine how much to adjust it up or down.
-            Adjust each digit independently.
-          <li>Adjust each digit that matches the cipher key by twice the amounts given.</li>
-          <li>Decrease each digit <b>5</b>-<b>9</b> by the amount equal to the cipher key.</li>
-          <li>Increase each digit <b>0</b>-<b>4</b> by the amount equal to the cipher key.</li>
-          <li>If exactly two digits match, increase the left digit by the cipher key if they are even,
-            or decrease the right digit by the cipher key if they are odd.</li>
-          <li>Decrease even digits by the amount of buttons that increase the display.</li>
-          <li>Increase odd digits by the amount of buttons that decrease the display.</li>
-          <li>Before pressing SEND, if any displayed number still matches the cipher key, adjust it up 1 if the cipher
-            key is odd, and down 1 if the cipher key is even.</li>
-        </ul>
-        <h3>Cipher Key</h3>
-        Use the given digit as the <b>Cipher Key</b> to adjust the dial.
-        <table width="100%" style="text-align:center">
-          <tr style="font-size:.9rem">
-            <td rowspan=2 width="18%">Button Behavior</td>
-            <td colspan=9>Cipher Key</td>
-          </tr>
-          <tr style="font-size:.9rem; border-top:hidden">
-            <td style="border-right:hidden" width="9%">1</td>
-            <td style="border-right:hidden" width="9%">2</td>
-            <td style="border-right:hidden" width="9%">3</td>
-            <td style="border-right:hidden" width="9%">4</td>
-            <td style="border-right:hidden" width="9%">5</td>
-            <td style="border-right:hidden" width="9%">6</td>
-            <td style="border-right:hidden" width="9%">7</td>
-            <td style="border-right:hidden" width="9%">8</td>
-            <td width="9%">9
-          <tr height="50">
-            <td style="font-size: .9rem">Zero Up</td>
-            <td><b>3</td>
-            <td><b>1</td>
-            <td><b>2</td>
-            <td><b>4</td>
-            <td><b>2</td>
-            <td><b>3</td>
-            <td><b>5</td>
-            <td><b>4</td>
-            <td><b>1</td>
-          </tr>
-          <tr height="50">
-            <td style="font-size: .9rem">One Up</td>
-            <td><b>1</td>
-            <td><b>5</td>
-            <td><b>3</td>
-            <td><b>2</td>
-            <td><b>5</td>
-            <td><b>1</td>
-            <td><b>4</td>
-            <td><b>2</td>
-            <td><b>3</td>
-          </tr>
-          <tr height="50">
-            <td style="font-size: .9rem">Two Up</td>
-            <td><b>5</td>
-            <td><b>3</td>
-            <td><b>4</td>
-            <td><b>1</td>
-            <td><b>4</td>
-            <td><b>2</td>
-            <td><b>1</td>
-            <td><b>5</td>
-            <td><b>2</td>
-          </tr>
-          <tr height="50">
-            <td style="font-size: .9rem">Three Up</td>
-            <td><b>4</td>
-            <td><b>2</td>
-            <td><b>5</td>
-            <td><b>3</td>
-            <td><b>1</td>
-            <td><b>5</td>
-            <td><b>2</td>
-            <td><b>3</td>
-            <td><b>4</td>
-          </tr>
-        </table>
-      </div>
-      <div class="page-footer relative-footer">Page 1 of 1</div>
-    </div>
-  </div>
+	<div class="section">
+		<div class="page page-bg-02">
+			<div class="page-header">
+				<span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+				<span class="page-header-section-title">Imitation</span>
+			</div>
+			<div class="page-content">
+				<img src="img/Component/Imitation.svg" class="diagram">
+				<h2>On the Subject of Imitation</h2>
+				<p class="flavour-text">It's like a riddle, wrapped in a mystery, inside an enigma...</p>
+				<ul>
+					<li>You must use the buttons to adjust each digit on the dial to the proper value before pressing SEND.
+					<li>The buttons below the dial increase or decrease a digit on the dial by one. Their function resets upon a
+						strike.
+					<li>Sum the three digits on the dial. If that number is two digits, sum the digits again.
+						Use this sum in the table below to determine the <b>Cypher Key</b>, along with the amount of buttons that
+						increase the display.
+					<li>Use <b>only</b> the original display value of each digit to determine how much to adjust it up or down.
+						Adjust each digit independently.
+					<li>Adjust each digit that matches the cypher key by double the amounts given.
+					<li>Decrease each digit <b>5</b>-<b>9</b> by the amount equal to the cypher key.
+					<li>Increase each digit <b>0</b>-<b>4</b> by the amount equal to the cypher key.
+					<li>If exactly two digits match, increase the left digit by the cypher key if they are <b><span
+								class="parity"></span></b>,
+						or decrease the right digit by the cypher key if they are <b><span class="parity"></span></b>.
+					<li>Decrease <b><span class="parity"></span></b> digits by the amount of buttons that increase the
+						display.
+					<li>Increase <b><span class="parity"></span></b> digits by the amount of buttons that decrease the display.
+						<br><br>
+					<li>After digits are adjusted, if any displayed number matches the cypher key,
+						adjust it up 1 if the cypher key is <b><span class="parity"></span></b>, and down 1 if the cypher key is
+						<b><span class="parity"></span></b>.
+				</ul>
+				<h3>Cypher Key</h3>
+				Use the given digit as the <b>Cypher Key</b> to adjust the dial.
+				<table id="numbersTable" width="100%" style="text-align:center">
+					<tr style="font-size:.9rem">
+						<td rowspan=2 width="18%">Button Behavior</td>
+						<td colspan=9>Digits Sum</td>
+					</tr>
+					<tr style="font-size:.9rem; border-top:hidden">
+						<td style="border-right:hidden" width="9%">1</td>
+						<td style="border-right:hidden" width="9%">2</td>
+						<td style="border-right:hidden" width="9%">3</td>
+						<td style="border-right:hidden" width="9%">4</td>
+						<td style="border-right:hidden" width="9%">5</td>
+						<td style="border-right:hidden" width="9%">6</td>
+						<td style="border-right:hidden" width="9%">7</td>
+						<td style="border-right:hidden" width="9%">8</td>
+						<td width="9%">9</td>
+					</tr>
+					<tr height="50">
+						<td style="font-size: .9rem">Zero Up</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr height="50">
+						<td style="font-size: .9rem">One Up</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr height="50">
+						<td style="font-size: .9rem">Two Up</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr height="50">
+						<td style="font-size: .9rem">Three Up</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="page-footer relative-footer">Page 1 of 1</div>
+		</div>
+	</div>
 </body>
 
 </html>
