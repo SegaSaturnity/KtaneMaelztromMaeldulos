@@ -14,17 +14,20 @@ MonoBehaviour:
   id: MaelztromMaeldulos
   title: Maelztrom Maeldulos
   author: Dragoon
-  description: "[h2]Maelztrom Maeldulos[/h2]\r\nA collection of modules based on manuals
-    by Maelztrom\r\n\r\nEach is designed to be vanilla friendly, beginner friendly,
-    and relatively straightforward.\r\n\r\n[table noborder=1]\r\n\t[tr][td][h3]BallDial[/h3]moduleID:
-    ballDial[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Ball%20Dial.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Ball%20Dial.html]Manual
+  description: "[h2]Maelztrom Maeldulos[/h2]\r\n\r\nA big collection of modules designed
+    to be vanilla friendly, beginner friendly, and relatively straightforward.\r\n\r\n[table
+    noborder=1]\r\n\t[tr][td][h3]BallDial[/h3]moduleID: ballDial[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Ball%20Dial.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Ball%20Dial.html]Manual
     HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Ball%20Dial.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Breakers[/h3]moduleID:
     breakers[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Breakers.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Breakers.html]Manual
     HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Breakers.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Curly
     Wires[/h3]moduleID: curlyWires[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Curly%20Wires.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Curly%20Wires.html]Manual
-    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Curly%20Wires.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Four
+    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Curly%20Wires.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Delumination[/h3]moduleID:
+    delumination[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Delumination.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Delumination.html]Manual
+    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Delumination.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Four
     Corners[/h3]moduleID: fourCorners[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Four%20Corners.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Four%20Corners.html]Manual
-    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Four%20Corners.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Q
+    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Four%20Corners.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Mixometer[/h3]moduleID:
+    mixometer[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/mixometer.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/mixometer.html]Manual
+    HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/mixometer.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Q
     & A[/h3]moduleID: q&a[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Q%20%26%20A.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Q%20%26%20A.html]Manual
     HTML[/url]\r\n\t\t[url=https://ktane.timwi.de/PDF/Q%20%26%20A.pdf]Manual PDF[/url][/td][/tr]\r\n\t[tr][td][h3]Quadrecta[/h3]moduleID:
     quadrecta[/td]\r\n\t\t[td][img]https://raw.githubusercontent.com/Timwi/KtaneContent/master/Icons/Quadrecta.png[/img][/td]\r\n\t\t[td][url=https://ktane.timwi.de/HTML/Quadrecta.html]Manual
