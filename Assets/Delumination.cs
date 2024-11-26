@@ -118,7 +118,7 @@ public class Delumination : MonoBehaviour {
 			row = bombInfo.GetSerialNumberNumbers().Min();
 		}
 		
-		if (row < 3) row = 5;
+		if (row < 4) row = 5;
 		else if (row < 7) row = 6;
 		row -= 5;
 		
@@ -131,7 +131,6 @@ public class Delumination : MonoBehaviour {
 			Debug.LogFormat("[Delumination #{0}] {1} switch is present, switches are right to left.", moduleId, color_names[order_extended[2]]);
 			col = (col - 3) * -1;
 		}
-		//Debug.LogFormat("Switch is position: {0}", col+1);
 		answer_u = table[ row * 4 + col ];
 		for (int i = 0; i < 6; i++) {
 			if ( System.Array.IndexOf(s_int, i) == -1 ) answer_u = answer_u.Replace(i.ToString(), string.Empty);
@@ -156,7 +155,6 @@ public class Delumination : MonoBehaviour {
 			Debug.LogFormat("[Delumination #{0}] {1} light is present, lights are right to left.", moduleId, color_names[order_extended[2]]);
 			col = (col - 3) * -1;
 		}
-		//Debug.LogFormat("Light is position: {0}", col+1);
 		answer_d = table[ row * 4 + col ];
 		for (int i = 0; i < 6; i++) {
 			if ( System.Array.IndexOf(l_int, i) == -1 || i == 4 ) answer_d = answer_d.Replace(i.ToString(), string.Empty);
