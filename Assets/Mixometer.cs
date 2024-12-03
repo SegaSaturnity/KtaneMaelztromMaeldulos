@@ -113,8 +113,9 @@ public class Mixometer : MonoBehaviour {
 	}
 	
 	void pressRotate (int pos) {
-		if (i_buttons[pos].Length != 0) audio.PlaySoundAtTransform("Dial", transform);
 		buttons[pos].AddInteractionPunch(0.25f);
+		if (isSolved) return;
+		if (i_buttons[pos].Length != 0) audio.PlaySoundAtTransform("Dial", transform);
 		rotateDials(i_buttons[pos]);
 	}
 	
