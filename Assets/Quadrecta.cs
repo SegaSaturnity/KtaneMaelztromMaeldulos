@@ -150,6 +150,8 @@ public class Quadrecta : MonoBehaviour {
 		light.transform.parent.GetComponent<MeshRenderer>().material.color = new Color(0.45f,0.45f,0.45f);
 		
 		light.transform.parent.GetChild(1).GetComponent<TextMesh>().text = "";
+
+		heldButton = null;
 		
 		if (solves[pos] == 1) return;
 		//i=y*W + x
@@ -229,10 +231,9 @@ public class Quadrecta : MonoBehaviour {
                 if(heldButton == null){
                     yield return "sendtochaterror {0}, no button is being held right now.";
                 }
-                if(int.TryParse(commandParts[1], out number)){
+                else if(int.TryParse(commandParts[1], out number)){
                     yield return new WaitUntil(() => bombInfo.GetFormattedTime().ToCharArray().Where(x => x != ':' && x != '.').Contains((char)(number+48)));
                     yield return heldButton;
-                    heldButton = null;
                 }else{
                     yield return "sendtochaterror {0}, that is not a number.";
                 }
