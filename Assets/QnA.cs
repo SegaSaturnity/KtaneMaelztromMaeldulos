@@ -12,7 +12,7 @@ public class QnA : MonoBehaviour {
     public KMRuleSeedable rs;
 	
 	private bool isSolved;
-	private static int moduleCount;
+	private static int moduleCount = 1;
     private int moduleId;
 	
 	private string[] questions = new string[] {"WHAT", "WHEN", "WHERE", "WHO", "HOW", "WHY"};

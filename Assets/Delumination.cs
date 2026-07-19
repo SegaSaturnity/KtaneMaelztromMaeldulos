@@ -14,7 +14,7 @@ public class Delumination : MonoBehaviour {
 	
 	private bool isSolved;
 	private bool colorblindModeEnabled;
-	private static int moduleCount;
+	private static int moduleCount = 1;
     private int moduleId;
 	
 	public KMSelectable[] switches;
@@ -142,7 +142,7 @@ public class Delumination : MonoBehaviour {
 			row = bombInfo.GetSerialNumberNumbers().Min();
 		}
 		
-		if (row < 3) row = 5;
+		if (row < 4) row = 5;
 		else if (row < 7) row = 6;
 		row -= 5;
 		

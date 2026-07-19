@@ -16,7 +16,7 @@ public class BallDial : MonoBehaviour {
 	public GameObject rot_point;
 	
 	private bool isSolved;
-	private static int moduleCount;
+	private static int moduleCount = 1;
     private int moduleId;
 	
 	public Material[] faces;
@@ -66,7 +66,12 @@ public class BallDial : MonoBehaviour {
 		b_directions[d].AddInteractionPunch();
 		
 		if (moving) return;
-		Debug.LogFormat("[Ball Dial #{0}] Direction pressed: {1}, display type was: {2}, expected: {3}.", moduleId, s_dirs[mod(d - clock, 4)], s_type[display_type], s_dirs[target]);
+		
+		if (press_n > 0 && mod(d - clock, 4) == target) {
+			press_n--;
+		}
+		
+		Debug.LogFormat("[Ball Dial #{0}] Direction pressed: {1}, physical button pressed: {4}, display type was: {2}, expected: {3}. Countdown at: {5}.", moduleId, s_dirs[mod(d - clock, 4)], s_type[display_type], s_dirs[target], s_dirs[mod(d, 4)], press_n);
 		
 		b_directions[d].AddInteractionPunch(0.25f);
 		if (mod(d - clock, 4) != target && !isSolved) {
@@ -75,10 +80,6 @@ public class BallDial : MonoBehaviour {
 			
 			press_n = 0;
 			clock = 0;
-		}
-		
-		if (press_n > 0 && mod(d - clock, 4) == target) {
-			press_n--;
 		}
 		
 		last_press = mod(d - clock, 4);
@@ -194,12 +195,12 @@ public class BallDial : MonoBehaviour {
 		foreach (string s in result) {
 			end += s;
 		}
-		
 		Debug.LogFormat("[Ball Dial #{0}] Generated face: {1}", moduleId, end);
 	}
 
 	//This has to be a war crime or something.
 	//Please simplify this later, me
+	//This is me, 1 year later. Go fuck yourself past me.
 	private int[] generateFace(int rnd) {
 		display = -1;
 		if (press_n < 1) {

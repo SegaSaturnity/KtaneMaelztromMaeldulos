@@ -20,7 +20,7 @@ public class CurlyWires : MonoBehaviour {
 	
 	private bool isSolved;
 	private bool colorblindModeEnabled;
-	private static int moduleCount;
+	private static int moduleCount = 1;
     private int moduleId;
 	
 	private int[] wire_seq = new int[] {0,0,0};

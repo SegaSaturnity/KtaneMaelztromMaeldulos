@@ -15,7 +15,7 @@ public class Quadrecta : MonoBehaviour {
 	public Light light;
 	
 	private bool isSolved;
-	private static int moduleCount;
+	private static int moduleCount = 1;
 	private bool colorblindModeEnabled;
     private int moduleId;
     private string[] selected;

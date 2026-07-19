@@ -11,7 +11,7 @@ public class Mixometer : MonoBehaviour {
     public KMRuleSeedable rs;
 	
 	private bool isSolved;
-	private static int moduleCount;
+	private static int moduleCount = 1;
     private int moduleId;
 	
 	private bool fakeStrike = true;
