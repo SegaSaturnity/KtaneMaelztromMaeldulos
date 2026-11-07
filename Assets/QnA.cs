@@ -122,7 +122,7 @@ public class QnA : MonoBehaviour {
         if(!answers.Contains(command)){
             yield return "sendtochaterror {0}, your command must consist of one of the following: THAT, THEN, THERE, THEM, THEY, THIS, THESE, THOSE.";
         }else{
-            yield return b_answers.Where(x => x.GetComponentInChildren<TextMesh>().text == command).ToArray()[0];
+            b_answers.Where(x => x.GetComponentInChildren<TextMesh>().text == command).ToArray()[0].OnInteract();
         }
     }
 
